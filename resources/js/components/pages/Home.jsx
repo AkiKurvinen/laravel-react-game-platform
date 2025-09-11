@@ -6,15 +6,23 @@ import FormControl from '@mui/material/FormControl';
 
 export default function Home() {
     const [gameInfo, setGameInfo] = useState([])
-    useEffect(async ()=>{
-        const resp = await fetch("/gameinfo.json");
-        const respJson = await resp.json();
-        setGameInfo(respJson.games);
+    useEffect(() => {
+        async function fetchGameInfo() {
+            const resp = await fetch("/gameinfo.json");
+            const respJson = await resp.json();
+            setGameInfo(respJson.games);
+        }
+        fetchGameInfo();
     }, [])
 
     return <>
         <div className='d-flex justify-content-center w-100'>
-            <div className='banner mx-3 d-flex justify-content-center align-items-center'>
+            <div
+                className='banner mx-3 d-flex justify-content-center align-items-center'
+                style={{
+                    backgroundImage: "url('/imgs/banner.jpg')",
+                }}
+            >
                 <Typography className='cool-title fw-900 text-uppercase display-2' style={{textDecoration: `underline ${Colors.theme}`}}>Great games</Typography>
             </div>
         </div>
@@ -26,7 +34,7 @@ export default function Home() {
                 <div className='d-flex mx-3'>
                     {
                     gameInfo.map(game => 
-                        <div className="boxi-outer w-50 m-2">
+                        <div className="boxi-outer w-50 m-2" key={game.id || game.name}>
                             <div className='d-flex boxi'>
                                 <div className="ms-2 d-flex flex-column">
                                     <h2 className='text-uppercase'

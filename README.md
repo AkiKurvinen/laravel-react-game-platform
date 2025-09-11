@@ -3,6 +3,7 @@
 - User accounst and game saves
 
 ## Develpoment
+
 ```bash
 composer update --no-scripts
 php artisan clear-compiled 
@@ -16,6 +17,7 @@ php artisan migrate
 npm install
 npm run build
 php artisan serve
+npm run dev
 ```
 http://localhost:8000
 
