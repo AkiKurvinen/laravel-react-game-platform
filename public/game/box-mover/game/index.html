@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <script src="/game/gameLib/gameLib.js"></script>
+    <link rel="shortcut icon" href="../game/img/box_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/loginform.css">
+</head>
+
+<body>
+    <script>
+        var locationtxt;
+        var box_location = [0, 0]
+        var user_id = 0;
+        var user_name = "";
+
+        class Example extends Phaser.Scene {
+            constructor() {
+                super();
+            }
+
+            preload() {
+                this.load.image('rocket', 'img/steelbox.png');
+                this.load.html('loginform', 'assets/loginform.html');
+            }
+
+
+            async create() {
+                this.add.text(16, 16, 'Drag the Box').setFontSize(24).setShadow(1, 1);
+                locationtxt = this.add.text(16, 64, `X: 0 - Y: 0`).setFontSize(24).setShadow(1, 1);
+
+                const container = this.add.container(400, 300);
+
+                // A container must have a size in order to receive input
+                container.setSize(120, 80);
+                container.setInteractive({ draggable: true });
+                const rocket = this.add.sprite(0, 0, 'rocket', 'rocket');
+
+                container.add([rocket]);
+                locationtxt.setText(`X: ${container.x} - Y: ${container.y}`)
+                container.on('drag', (pointer, dragX, dragY) => {
+                    container.setPosition(dragX, dragY)
+                    box_location = [dragX, dragY]
+                    locationtxt.setText(`X: ${dragX} - Y: ${dragY}`)
+                });
+
+                // button call API
+
+                const button = this.add.text(700, 550, 'Save position', {
+                    fontFamily: 'Arial',
+                    fontSize: '16px',
+                    color: '#ffffff',
+                    align: 'center',
+                    fixedWidth: 120,
+                    backgroundColor: '#2d2d2d'
+                }).setPadding(8).setOrigin(0.5);
+
+                button.setInteractive({ useHandCursor: true });
+
+                button.on('pointerover', () => {
+                    button.setBackgroundColor('#8d8d8d');
+                });
+
+                button.on('pointerout', () => {
+                    button.setBackgroundColor('#2d2d2d');
+                });
+
+                button.on('pointerdown', () => {
+                    button.setBackgroundColor('#000');
+                    saveBoxLocation()
+                });
+
+                // game specific API Methods
+                const saveBoxLocation = async () => {
+                    const instance = new gameApi("box-mover");
+                    await instance.saveGamestate({ "x": box_location[0], "y": box_location[1] });
+                }
+                const getUserBoxlocation = async () => {
+                    const instance = new gameApi("box-mover");
+                    let gamestate = (await instance.getGamestate());
+                    gamestate ??= { "x": 400, "y": 300 };
+                    return [gamestate.x, gamestate.y]
+                }
+
+                // login form - loaded from HTML file
+                const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
+
+                // first try to auto login user by session
+                const autologinsuccess = true
+                if (autologinsuccess) {
+
+                    // setup game specific stuff
+                    const get_box_location = await getUserBoxlocation()
+                    box_location = !get_box_location ? [0, 0] : get_box_location;
+                    container.setPosition(box_location[0], box_location[1])
+                    locationtxt.setText(`X: ${box_location[0]} - Y: ${box_location[1]}`)
+                    text.setText("logged in")
+                }
+
+                const flash_effect = (target) => {
+                    target.scene.tweens.add({
+                        targets: text,
+                        alpha: 0.2,
+                        duration: 250,
+                        ease: 'Power3',
+                        yoyo: true
+                    });
+                }
+            }
+
+        }
+
+        const config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            parent: 'phaser-example',
+            scene: Example,
+            dom: {
+                createContainer: true
+            },
+        };
+
+        const game = new Phaser.Game(config);
+    </script>
+
+</body>
+
+</html>

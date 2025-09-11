@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button clicker</title>
+    <script src="../loginform.js"></script>
+    <link rel="shortcut icon" href="img/button_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <p style="color: var(--primary-main);">Common auth API / SESSION</p>
+        <div id="login_btn"></div>
+        <p style="color: var(--secondary-main);">Game specific API</p>
+        <div id="my_stats"></div>
+        <br>
+        <div id="global_stats"><b>Button clicker global game stats</b>
+            <table>
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Username</td>
+                        <td>Click Count</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Test User</td>
+                        <td>999</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Other User</td>
+                        <td>400</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Another User</td>
+                        <td>200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </header>
+
+    <main>
+        <h1>Button clicker game</h1>
+        <p>Info about the game</p>
+        <a href="game/" id="play_link">Play now</a>
+        <br>
+        <br><br>
+
+
+    </main>
+</body>
+<script>
+    // simulate common authentication API
+    const loggedin = userIsLoggedin();
+    const login_btn_elem = document.getElementById("login_btn")
+    login_btn_elem.innerHTML = loggedin ? 'Welcome ' : ''
+    login_btn_elem.innerHTML += loginbutton()
+    document.querySelector("main").innerHTML += `<a href="../?loggedin=${loggedin}">Back</a>`
+    document.getElementById("play_link").setAttribute("href", `game/?loggedin=${loggedin}`)
+
+    // simulate game specific API
+    const my_stats_elem = document.getElementById("my_stats")
+    if (loggedin) {
+        my_stats_elem.innerHTML += 'Your highest click count is 999'
+    }
+    else {
+        my_stats_elem.innerHTML = 'No user data to display'
+    }
+</script>
+
+</html>

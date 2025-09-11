@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game accounts</title>
+    <link rel="stylesheet" href="/game/style.css">
+    <script src="/game/loginform.js"></script>
+    <link rel="shortcut icon" href="/game/img/logo.png" type="image/x-icon">
+</head>
+<header>
+    <div class="logo"><img src="/game/img/logo_white.png" alt="">Logo</div>
+    <nav>
+        <ul>
+            <li><a href="#action">Action</a></li>
+            <li><a href="#adventure">Adventure</a></li>
+        </ul>
+    </nav>
+    <div id="login_btn"></div>
+</header>
+<div class="hero">
+    <blockquote>Home of games</blockquote>
+</div>
+<nav></nav>
+<main>
+    <div id="game_list"></div>
+</main>
+<footer>
+    <p>Footer links and credits</p>
+    <i>Game accounts template</i>
+</footer>
+
+<body>
+    <script>
+        const login_btn_elem = document.getElementById("login_btn")
+        login_btn_elem.innerHTML = loginbutton(false)
+    </script>
+    <script>
+        const game_list_elem = document.getElementById("game_list")
+
+        async function getData(isloggedin = false) {
+            const url = "/game/page_data.json";
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                let html = ""
+                function getOtherLinks(otherlinks) {
+                    let html = ""
+                    otherlinks.forEach(otherlink => {
+                        html += `<a href="${otherlink.target}" target="_blank">${otherlink.text}</a>`
+                    })
+                    return html
+                }
+                json.sections.forEach(section => {
+                    html += `<section id="${section.id}">`
+                    html += `<h2>${section.name}</h2>`
+                    section.games.forEach(game => {
+                        html += `<div class="game_card">
+                            <div class="game_info">
+                                <h3>${game.name}</h3>
+                                <p>${game.desc}</p>
+                                ${getOtherLinks(game.otherlinks)}
+                                <a href="/game/${game.gamelink}?loggedin=${isloggedin}" class="play_btn">Play</a>
+                                
+                            </div>
+                            <div class="game_gallery">
+                                `
+                        game.gallery.forEach(img => {
+                            html += `<img src="/game/img/games/${img.src}" alt="${img.alt}">`
+                        });
+                        html += '</div></div>'
+                    });
+
+                });
+                html += '</section>'
+
+                game_list_elem.innerHTML = html
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        let isloggedin = urlParams.get('loggedin')
+        getData(isloggedin)
+
+    </script>
+
+</body>
+
+</html>

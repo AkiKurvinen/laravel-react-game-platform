@@ -1,0 +1,33 @@
+:root {
+    --primary-main: rgb(0, 113, 189);
+    --secondary-main: #9761ee;
+    --secondary-light: #b78dfa;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif
+}
+
+#login_btn {
+    background-color: var(--primary-main);
+    padding: 1em;
+    color: white;
+    margin-bottom: 1em;
+}
+
+#my_stats {
+    padding: 1em;
+    background-color: var(--secondary-main);
+}
+
+#global_stats {
+    background-color: var(--secondary-main);
+}
+
+#global_stats table {
+    border-collapse: collapse;
+}
+
+#global_stats table tbody tr:nth-child(odd) {
+    background-color: var(--secondary-light);
+}

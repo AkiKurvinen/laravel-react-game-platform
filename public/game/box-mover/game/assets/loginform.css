@@ -1,0 +1,51 @@
+section {
+    background-color: rgb(76, 117, 74);
+    width: 400px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    border-radius: 0.25em;
+}
+
+section a,
+section a:visited {
+    color: white;
+}
+
+section a:hover {
+    text-decoration: none;
+}
+
+section details summary {
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: rgb(9, 68, 32);
+    color: white;
+    text-align: left;
+}
+
+section details summary:hover {
+    cursor: pointer;
+    background-color: rgb(4, 41, 18);
+}
+
+section details:first-child summary {
+    border-top-left-radius: 0.25em;
+    border-top-right-radius: 0.25em;
+}
+
+section details {
+    margin-bottom: 0.5em;
+    background-color: rgb(76, 117, 74);
+    padding-bottom: 0.25em;
+    border-radius: 0.25em;
+}
+
+section input {
+    padding: 0.5em 1em;
+}
+
+section input[type=button] {
+    min-width: 100px;
+    margin: 1em;
+    cursor: pointer;
+}

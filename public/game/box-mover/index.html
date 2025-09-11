@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box mover</title>
+    <script src="../loginform.js"></script>
+    <link rel="shortcut icon" href="game/img/box_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <p style="color: var(--primary-main);">Common auth API / SESSION</p>
+        <div id="login_btn"></div>
+        <p style="color: var(--secondary-main);">Game specific API</p>
+        <div id="my_stats"></div>
+        <br>
+
+        <div id="global_stats"><b>Box mover global game stats</b>
+            <table>
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Username</td>
+                        <td>Box Location</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Test User</td>
+                        <td>200, 300</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Other User</td>
+                        <td>100, 200</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Another User</td>
+                        <td>400, 500</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </header>
+
+    <main>
+        <h1>Box mover game</h1>
+        <p>Info about the game</p>
+        <a href="" id="play_link">Play now</a>
+        <br>
+        <br>
+    </main>
+</body>
+<script>
+    // simulate common authentication API
+    // const loggedin = userIsLoggedin();
+    // const login_btn_elem = document.getElementById("login_btn")
+    // login_btn_elem.innerHTML = loggedin ? ' Welcome ' : ''
+    // login_btn_elem.innerHTML += loginbutton()
+    route = window.location.href
+    console.log(route)
+    // document.querySelector("main").innerHTML += `<a href="../?loggedin=${loggedin}">Back</a>`
+    document.getElementById("play_link").setAttribute("href", route+`/game/?loggedin=${true}`)
+
+    // simulate game specific API
+    const account_loggedin = document.querySelector(".account_box").getAttribute("loggedin") == "true"
+    const my_stats_elem = document.getElementById("my_stats")
+    if (account_loggedin) {
+        my_stats_elem.innerHTML = 'You left the box at position [200, 300]'
+    }
+    else {
+        my_stats_elem.innerHTML = 'No user data to display'
+    }
+</script>
+
+
+</html>

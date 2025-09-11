@@ -1,0 +1,16 @@
+{
+    "games": [
+        {
+            "name": "Button clicker",
+            "thumbnail": "/imgs/peli1.png",
+            "description": "tää on peli 1 nice pog wowzers",
+            "link": "/gamestart/button-clicker"
+        },
+        {
+            "name": "Box mover",
+            "thumbnail": "/imgs/peli2.png",
+            "description": "tää on peli 2 moi",
+            "link": "/gamestart/box-mover"
+        }
+    ]
+}

@@ -1,0 +1,150 @@
+:root {
+    --primary-main: rgb(0, 113, 189);
+    --primary-light: rgb(12, 136, 219);
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-main);
+    color: white;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+}
+
+header img {
+    max-height: 50px;
+}
+
+.avatar_icon {
+    background-image: url("img/avatars/user_avatar-01.jpg");
+    background-size: contain;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.login_icon {
+    background-image: url("img/account_white.svg");
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+}
+
+main {
+    margin: 2em auto;
+    max-width: 800px;
+}
+
+.hero {
+    background-image: url('img/hero.jpg');
+    min-height: 400px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 50px;
+}
+
+.hero blockquote {
+    color: white;
+    font-size: 3em;
+    position: absolute;
+    right: 2em;
+    bottom: 1em;
+}
+
+nav ul {
+    display: flex;
+    gap: 0.5em;
+    list-style-type: none;
+}
+
+nav ul li a,
+nav ul li a:visited {
+    color: white;
+    padding: 1em;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-left: 1em;
+}
+
+
+.game_card {
+    display: flex;
+    gap: 1em;
+}
+
+.game_gallery img {
+    max-width: 400px;
+}
+
+#login_btn {
+    display: flex;
+    justify-content: end;
+    min-width: 100px;
+    margin-right: 1em;
+}
+
+#login_btn button {
+    background-color: unset;
+    display: flex;
+    gap: 1em;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    width: 100%;
+    color: white;
+}
+
+#login_btn button:hover {
+    background-color: var(--primary-light);
+    cursor: pointer;
+}
+
+#login_btn button span {
+    display: block;
+}
+
+.game_info a {
+    display: block;
+    padding: 0.5em;
+    padding-left: 0;
+}
+
+.game_info .play_btn {
+    background-color: var(--primary-main);
+    display: inline-block;
+    color: white;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    margin-top: 1em;
+}
+
+.game_info .play_btn:hover {
+    background-color: rgb(12, 136, 219);
+}
+
+footer {
+    background-color: black;
+    min-height: 100px;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}

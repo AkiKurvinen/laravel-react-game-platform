@@ -1,0 +1,29 @@
+{
+    "sections": [
+        {   "id":"action",
+            "name":"Action games",
+            "games": [
+                {"name": "Click the button",
+                "desc": "Are you ready to click the button? In this game you do it a lot!",
+                "otherlinks": [
+                    {"target": "https://phaser.io/", "text":"Created with phaser.io"},
+                    {"target": "https://itch.io/", "text":"Follow us on itch.io"}
+                ],
+                "gamelink": "button-clicker/",
+                "gallery": [{"src":"click-button-game.jpg", "alt": "Move the box gameplay"}]
+            }]
+        },
+        {   "id":"adventure",
+            "name":"Adventure games",
+            "games": [
+            {   "name": "Move the box",
+                "desc": "Tactical adventure that lets you move the box anywhere you want.",
+                "otherlinks": [
+                    {"target": "https://phaser.io/", "text":"Created with phaser.io"}
+                ],
+                "gamelink": "box-mover/",
+                "gallery": [{"src":"drag-the-box-game.jpg", "alt": "Move the box gameplay"}]
+            }]
+        }
+    ]
+}
