@@ -1,36 +1,50 @@
-# special project
+# Laravel React game platform
+- Web app for online browser game platform
+- User accounst and game saves
 
-## API docs
-```
-GET /api/gamestate/<game name> --> responds with saved game state in JSON form.
-POST /api/gamestate/<game name> BODY: {'score': 5} --> saves game state.
-GET /api/leaderboard/<game name> --> responds with leaderboard in form of a JSON array.
-POST /api/leaderboard/<game name> --> BODY: {'metric': 5}
-```
-
-## Deployment ohjeet
-1. php artisan key:generate
-2. php artisan migrate --force
-3. php artisan config:cache
-4. php artisan route:cache
-5. php artisan view:cache
-6. kopioi koko laravel directory php web servulle
-7. tee /public kansiosta jotenkin web root
-
-## Komennot jos laravel kikkailee ensinmäisellä suoritus kerralla
-```
+## Develpoment
+```bash
 composer update --no-scripts
 php artisan clear-compiled 
 composer dump-autoload
 php artisan optimize
-copy .env.example .env
+cp .env.example .env
 php artisan config:cache
 php artisan key:generate
 php artisan config:cache
 php artisan migrate
 npm install
 npm run build
+php artisan serve
+```
+http://localhost:8000
+
+## Deployment
+```bash
+php artisan key:generate
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+copy laravel directory php to web server  
+make /public folder the web root
+
+## API documentation (swagger)
+```bash
+chmod -R 777 storage/api-docs
+php artisan l5-swagger:generate
+php artisan serve
+```
+http://localhost:8000/api/documentation
+
+## API docs
+```
+GET /api/gamestate/<game name> --> responds with saved game state in JSON form.  
+POST /api/gamestate/<game name> BODY: {'score': 5} --> saves game state.  
+GET /api/leaderboard/<game name> --> responds with leaderboard in form of a JSON array.  
+POST /api/leaderboard/<game name> --> BODY: {'metric': 5}  
 ```
 
-## Todo
-- [x] Testi react sivusto for reference
+## License
+This project is a fork of [php-ohjelmointiprojekti-koodit-dream-team](https://github.com/tredu/php-ohjelmointiprojekti-koodit-dream-team) by Tampereen seudun ammattiopisto Tredu. The original project is licensed under the MIT License.
