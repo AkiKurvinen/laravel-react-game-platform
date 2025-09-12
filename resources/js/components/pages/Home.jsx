@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 import { Colors } from '../Globals';
 import { Button, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
+import {Hero} from '../Hero/Hero';
 
 export default function Home() {
     const [gameInfo, setGameInfo] = useState([])
@@ -16,16 +17,8 @@ export default function Home() {
     }, [])
 
     return <>
-        <div className='d-flex justify-content-center w-100'>
-            <div
-                className='banner mx-3 d-flex justify-content-center align-items-center'
-                style={{
-                    backgroundImage: "url('/imgs/banner.jpg')",
-                }}
-            >
-                <Typography className='cool-title fw-900 text-uppercase display-2' style={{textDecoration: `underline ${Colors.theme}`}}>Great games</Typography>
-            </div>
-        </div>
+    <Hero/>
+
         <div className="w-100 d-flex justify-content-center">
             <div style={{maxWidth: "1000px"}} className='w-100'>
                 <div className="d-flex justify-content-center w-100">
