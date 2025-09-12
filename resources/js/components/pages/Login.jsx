@@ -2,7 +2,6 @@ import FormControl from '@mui/material/FormControl';
 import { useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import React from 'react';
-import {Colors} from '../Globals';
 import { useState } from 'react';
 import { Typography} from '@mui/material';
 export default function Login() {
@@ -36,7 +35,7 @@ export default function Login() {
         <div className='d-flex w-100 justify-content-center'>
             <FormControl className='d-flex flex-column rounded border p-3 m-1' sx={{maxWidth: "400px", width: "100%"}}>
                 <div className="d-flex justify-content-center">
-                    <b style={{color: Colors.primary}} className='fs-4 fw-900 text-uppercase'>Kirjaudu sisään<span style={{color: Colors.theme, fontSize: "35px", marginLeft: "3px"}}>.</span></b>
+                    <b className='fs-4 fw-900 text-uppercase'>Kirjaudu sisään<span style={{fontSize: "35px", marginLeft: "3px"}}>.</span></b>
                 </div>
                 <TextField {...register('username', { required: true })} className='mb-1 mt-2' variant="outlined" label="Käyttäjänimi" name="username"/>
                 <TextField type='password' {...register('password', { required: true })} className='mb-1 mt-2' variant="outlined" label="Salasana" name="password"/>
@@ -45,8 +44,8 @@ export default function Login() {
                     'message' in error 
                     ? 
                         error['message'] == "Login successful" 
-                        ? <Typography sx={{color: Colors.success}}>{error['message']}</Typography>
-                        : <Typography sx={{color: Colors.theme}}>{error['message']}</Typography>
+                        ? <Typography>{error['message']}</Typography>
+                        : <Typography>{error['message']}</Typography>
                     : <></>
                 }
             </FormControl>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Colors } from "../Globals";
 import React from "react";
 import { FormControl, Typography, TextField, Button } from "@mui/material";
 
@@ -46,7 +45,7 @@ export default function Account() {
         <div className='d-flex w-100 justify-content-center'>
         <FormControl className='d-flex flex-column rounded border p-3 m-1' sx={{maxWidth: "400px", width: "100%"}}>
             <div className="d-flex justify-content-center">
-                <b style={{color: Colors.primary}} className='fs-4 fw-900 text-uppercase'>Käyttäjätilin asetukset<span style={{color: Colors.theme, fontSize: "35px", marginLeft: "3px"}}>.</span></b>
+                <b className='fs-4 fw-900 text-uppercase'>Käyttäjätilin asetukset<span style={{ fontSize: "35px", marginLeft: "3px"}}>.</span></b>
             </div>
             <TextField value={username} onChange={(e)=>{setUsername(e.target.value)}} className='mb-1 mt-2' variant="outlined" label="Käyttäjänimi" name="username"/>
             <TextField value={email} onChange={(e)=>{setEmail(e.target.value)}} className='mb-1 mt-2' variant="outlined" label="Sähköposti" name="email"/>
@@ -56,8 +55,8 @@ export default function Account() {
                 'message' in message 
                 ? 
                 message['message'] == "account settings saved" 
-                    ? <Typography sx={{color: Colors.success}}>{message['message']}</Typography>
-                    : <Typography sx={{color: Colors.theme}}>{message['message']}</Typography>
+                    ? <Typography>{message['message']}</Typography>
+                    : <Typography>{message['message']}</Typography>
                 : <></>
             }
         </FormControl>

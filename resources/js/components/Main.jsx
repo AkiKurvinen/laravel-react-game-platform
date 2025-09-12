@@ -5,12 +5,11 @@ import Home from "./pages/Home";
 import Layout from "./Layout";
 import Login from './pages/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Colors } from './Globals';
 import Register from './pages/Register';
 import GameStart from './pages/GameStart';
 import Account from './pages/Account';
 import theme from './theme'
-
+import CssBaseline from '@mui/material/CssBaseline';
 
 function Main() {
     return (
@@ -32,6 +31,8 @@ if (rootElement) {
     root.render(
         <React.StrictMode>
             <ThemeProvider theme={theme}> {/* Use ThemeProvider from MUI */}
+                    <CssBaseline />
+
                 <BrowserRouter>
                     <Main />
                 </BrowserRouter>
