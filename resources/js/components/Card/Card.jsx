@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import { Button, TextField } from '@mui/material';
-
+import { Gallery } from '../Gallery/Gallery';
 const UnstyledCard = ({ game, ...props }) => {
     return (
         <div key={game.id || game.name} {...props}>
@@ -11,7 +11,9 @@ const UnstyledCard = ({ game, ...props }) => {
                 <p>{game.description}</p>
                 <Button variant='contained' href={game.link}>Play</Button>
             </div>
-            <img src={`./img/thumbs/${game.thumbnail}`} className={`cardImg`} alt={game.name} />
+            <Gallery
+                images={game.gallery}
+             />
         </div>
     );
 }
@@ -23,7 +25,7 @@ export const Card = styled(UnstyledCard)`
   gap: 2em;
 
   & div:first-of-type,
-  & div:first-child {
+  & div:first-of-type {
     width: 100%;
     vertical-align: top;
     text-align: justify;
