@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel React Game Platform API",
+        "description": "API documentation for the Laravel React Game Platform",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/gamestate/{game}": {
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Save game state",
+                "operationId": "50dd3be1dcabb313e78966de7b1e40dc",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "data": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Game state saved"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/leaderboard/{game}": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get leaderboard",
+                "operationId": "f6ceab2db8a1bf3fe404f87de902c588",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Leaderboard returned"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "API",
+            "description": "API"
+        }
+    ]
+}
