@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import {Hero} from '../Hero/Hero';
 import {Card} from '../Card/Card';
+import Typography from '@mui/material/Typography';
 
 export default function Home() {
     const [gameInfo, setGameInfo] = useState([])
@@ -15,7 +16,10 @@ export default function Home() {
     }, [])
 
     return <>
-    <Hero/>
+    <Hero heroimage={"./img/banner.jpg"}>
+        <Typography variant={"h1"}>Great Games</Typography>
+        <Typography variant={"subtitle1"}>Just play it!</Typography>
+    </Hero>
 
         <div className="w-100 d-flex justify-content-center">
             <div style={{maxWidth: "1000px"}} className='w-100'>

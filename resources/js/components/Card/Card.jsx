@@ -5,45 +5,43 @@ import { Button, TextField } from '@mui/material';
 
 const UnstyledCard = ({ game, ...props }) => {
     return (
-        <div className="boxi-outer card-outer" key={game.id || game.name} {...props}>
-            <div className='card-inner boxi'>
-                <div className="card-content">
-                    <h2 className={`cardTitle`}>{game.name}</h2>
-                    <img src={game.thumbnail} className={`cardImg`} alt={game.name} />
-                    <p className={`cardDesc`}>{game.description}</p>
-                    <Button variant='contained' sx={{fontWeight: 'bold'}} href={game.link}>pelaa</Button>
-                </div>
+        <div key={game.id || game.name} {...props}>
+            <div>
+                <h2>{game.name}</h2>
+                <p>{game.description}</p>
+                <Button variant='contained' href={game.link}>Play</Button>
             </div>
+            <img src={`./img/thumbs/${game.thumbnail}`} className={`cardImg`} alt={game.name} />
         </div>
     );
 }
 
 export const Card = styled(UnstyledCard)`
-    .card-outer {
-        width: 50%;
-        margin: 8px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 2em;
+
+  & div:first-of-type,
+  & div:first-child {
+    width: 100%;
+    vertical-align: top;
+    text-align: justify;
+  }
+  & div:last-of-type img,
+  & div:last-child img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  & small {
+    margin-left: 2em;
+  }
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    & div:first-of-type {
+      margin-bottom: 0;
     }
-    .card-inner {
-        display: flex;
-    }
-    .card-content {
-        margin-left: 0.5em;
-        display: flex;
-        flex-direction: column;
-    }
-    .cardTitle {
-        color: ${(props) => props.theme.palette.primary.main};
-        text-transform: uppercase;
-        text-decoration: underline;
-        text-decoration-color: var(--theme-color);
-    }
-    .cardImg {
-        max-width: 500px;
-        max-height: 250px;
-        border-radius: 8px;
-    }
-    .cardDesc {
-        color: ${(props) => props.theme.palette.primary.main};
-        font-size: 20px;
-    }
+  }
 `
