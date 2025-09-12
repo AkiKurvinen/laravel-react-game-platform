@@ -32,9 +32,9 @@ export default function Login() {
         });
     }
     return (
-        <div className='d-flex w-100 justify-content-center'>
-            <FormControl className='d-flex flex-column rounded border p-3 m-1' sx={{maxWidth: "400px", width: "100%"}}>
-                <div className="d-flex justify-content-center">
+        <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>
+            <FormControl sx={{display: 'flex', flexDirection: 'column', borderRadius: '8px', border: '1px solid #ccc', padding: '16px', margin: '8px', maxWidth: "400px", width: "100%"}}>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
                     <b className='fs-4 fw-900 text-uppercase'>Kirjaudu sisään<span style={{fontSize: "35px", marginLeft: "3px"}}>.</span></b>
                 </div>
                 <TextField {...register('username', { required: true })} className='mb-1 mt-2' variant="outlined" label="Käyttäjänimi" name="username"/>

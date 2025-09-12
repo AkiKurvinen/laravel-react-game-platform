@@ -4,12 +4,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./Layout";
 import Login from './pages/Login';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import Register from './pages/Register';
 import GameStart from './pages/GameStart';
 import Account from './pages/Account';
 import theme from './theme'
 import CssBaseline from '@mui/material/CssBaseline';
+import { GlobalStyles } from './GlobalStyles';
 
 function Main() {
     return (
@@ -18,7 +19,7 @@ function Main() {
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route path="account" element={<Account/>}/>
+                <Route path="account" element={<Account />}/>
                 <Route path="gamestart/:game" element={<GameStart />} />
             </Route>
         </Routes>
@@ -31,8 +32,8 @@ if (rootElement) {
     root.render(
         <React.StrictMode>
             <ThemeProvider theme={theme}> {/* Use ThemeProvider from MUI */}
-                    <CssBaseline />
-
+                <CssBaseline />
+                <GlobalStyles />
                 <BrowserRouter>
                     <Main />
                 </BrowserRouter>
