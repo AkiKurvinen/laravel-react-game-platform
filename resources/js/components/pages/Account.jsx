@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { FormControl, Typography, TextField, Button } from "@mui/material";
 
 export default function Account() {
@@ -8,7 +8,6 @@ export default function Account() {
     const [email, setEmail] = useState("loading...");
     const [username, setUsername] = useState("loading...");
     const [newPassword, setNewPassword] = useState("");
-
 
     useEffect(()=>{
         fetch("/api/user").then(out=>out.json()).then(out => {
