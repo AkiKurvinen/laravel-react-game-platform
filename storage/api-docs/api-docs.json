@@ -1,0 +1,175 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel React Game Platform API",
+        "description": "API documentation for the Laravel React Game Platform",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/gamestate/{game}": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get game state for authenticated user",
+                "description": "Requires authentication.",
+                "operationId": "279bff21f224f523f59c54cd35b36af0",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Game state returned"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Save game state for authenticated user",
+                "description": "Requires authentication.",
+                "operationId": "bd92303971abc6b9208913113d57d785",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "data": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Game state saved"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/leaderboard/{game}": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get leaderboard for a game",
+                "description": "Public endpoint.",
+                "operationId": "a4be61039600be02b0e80f15004b9ce6",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Leaderboard returned"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Save leaderboard entry for authenticated user",
+                "description": "Requires authentication.",
+                "operationId": "50179d16695971d76edae496e0a034a0",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "metric": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Leaderboard entry saved"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "API",
+            "description": "API"
+        }
+    ]
+}

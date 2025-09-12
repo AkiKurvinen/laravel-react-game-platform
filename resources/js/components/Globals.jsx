@@ -1,6 +1,6 @@
 export var Colors = {
     "success": "#5FAF3E",
-    "background": "#161616",
-    "primary": "#FFFFFF",
+    "background": "#fff",
+    "primary": "#222",
     "theme": "#E44C4C",
 }
