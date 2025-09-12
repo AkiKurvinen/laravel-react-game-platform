@@ -9,7 +9,7 @@ import { Colors } from './Globals';
 import Register from './pages/Register';
 import GameStart from './pages/GameStart';
 import Account from './pages/Account';
-
+import theme from './theme'
 
 
 function Main() {
