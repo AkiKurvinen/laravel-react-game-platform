@@ -8,9 +8,9 @@ import {
   KeyboardArrowRight,
   Clear,
   QuestionMark,
-} from "@mui/icons-material";
-import StorybookIcon from "../../../../public/img/svg/storybook.svg";
-import Twitterx from "../../../../public/img/svg/twitterx.svg";
+} from "@mui/icons-material"
+import Twitterx from "../../../../public/img/svg/twitterx.svg?react";
+import StorybookIcon from '../../../../public/img/svg/storybook.svg?react';
 
 import { FaAnglesRight } from "react-icons/fa6";
 import { HiCloud } from "react-icons/hi";
@@ -46,8 +46,6 @@ function getIcon(icon, className) {
       return <StorybookIcon className={className} />;
     case icon == "mui-arrowright":
       return <KeyboardArrowRight className={className} />;
-    case icon == "storybook":
-      return <StorybookIcon className={className} />;
     case icon == "react-fontawesome":
       return <FaAnglesRight className={className} />;
     case icon == "react-heroicons":
@@ -83,7 +81,7 @@ function getIcon(icon, className) {
   return <QuestionMark className={className} />;
 }
 
-const StyledIcon= ({ className = "icon", icon }) => {
+const StyledIcon = ({ className = "icon", icon }) => {
   return getIcon(icon, className);
 };
 

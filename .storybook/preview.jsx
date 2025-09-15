@@ -1,7 +1,9 @@
 /** @type { import('@storybook/react-vite').Preview } */
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../resources/js/components/theme'; // adjust path as needed
+import theme from '../resources/js/components/theme';
+import { GlobalStyles } from '../resources/js/components/GlobalStyles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const preview = {
     parameters: {
@@ -23,6 +25,8 @@ const preview = {
 export const decorators = [
     (Story) => (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <GlobalStyles />
             <Story />
         </ThemeProvider>
     ),

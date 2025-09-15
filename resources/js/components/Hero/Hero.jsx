@@ -1,9 +1,18 @@
+import React from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import React from "react";
 
-const hero_base = css`
-  height: 100vh; /* You must set a specified height */
+export const StyledHero = ({ heroimage, children, ...props }) => {
+  return (
+    <div id="hero" {...props}>
+      <img src={`${heroimage}`} width="1920" height="1080" alt={"Hero"} />
+      <div>{children}</div>
+    </div>
+  );
+};
+
+export const Hero = styled(StyledHero)`
+   height: 100vh; /* You must set a specified height */
   width: 100%;
   position: relative;
   background: rgb(172,0,40);
@@ -52,16 +61,4 @@ const hero_base = css`
       font-size: 1em;
     }
   }
-`;
-
-export const StyledHero = ({ heroimage, children, ...props }) => {
-  return (
-    <div id="hero" {...props}>
-      <img src={`${heroimage}`} width="1920" height="1080" alt={"Hero"} />
-      <div>{children}</div>
-    </div>
-  );
-};
-export const Hero = styled(StyledHero)`
-  ${hero_base}
 `;

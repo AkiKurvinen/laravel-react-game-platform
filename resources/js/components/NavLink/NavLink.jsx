@@ -44,24 +44,13 @@ const StyledNavLink = ({
   endicon,
   leftBorder,
   className,
-  isNextLink = false,
   ...props
 }) => {
   return (
-    <>
-      {isNextLink && (
-        <a href={target} className={className} {...props}>
-          {label}
-          {endicon}
-        </a>
-      )}
-      {!isNextLink && (
-        <a href={target} className={className} {...props}>
-          {label}
-          {endicon}
-        </a>
-      )}
-    </>
+    <a href={target} className={className} {...props}>
+      {label}
+      {endicon}
+    </a>
   );
 };
 

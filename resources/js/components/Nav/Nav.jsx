@@ -3,65 +3,63 @@ import { NavLink } from "../NavLink/NavLink";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
-
 const StyledNav = ({
-    links,
-    logo,
-    children,
-    ...props
+  links,
+  logo,
+  children,
+  ...props
 }) => {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-    const openMenu = () => {
-        setOpen(!open);
-    };
+  const openMenu = () => {
+    setOpen(!open);
+  };
 
-    return (
-        <nav {...props}>
-            <a href="/#hero" className="logo">
-                {logo ? (
-                    <img src={logo} width={500} height={500} alt="Auger Games" />
-                ) : (
-                    <>Logo</>
-                )}
-            </a>
-            {!open ? (
-                <button className="burger" onClick={openMenu}>
-                    &equiv;
-                </button>
-            ) : (
-                <button className="burger" onClick={openMenu}>
-                    &times;
-                </button>
-            )}
-            <ul className={open ? "expanded" : ""}>
-                {links ? (
-                    <>
-                        {links.map((link, idx) => {
-                            return (
-                                <li key={idx}>
-                                    <NavLink
-                                        target={link.target}
-                                        label={link.text}
-                                        key={link.target}
-                                        onClick={openMenu}
-                                        isNextLink={link.isNextLink || false}
-                                    />
-                                </li>
-                            );
-                        })}
-                    </>
-                ) : (
-                    <>
-                        <li>
-                            <NavLink target="#" label="Home" key={"home"} />
-                        </li>
-                    </>
-                )}
-                {children}
-            </ul>
-        </nav>
-    );
+  return (
+    <nav {...props}>
+      <a href="/#hero" className="logo">
+        {logo ? (
+          <img src={logo} width={500} height={500} alt="Auger Games" />
+        ) : (
+          <>Logo</>
+        )}
+      </a>
+      {!open ? (
+        <button className="burger" onClick={openMenu}>
+          &equiv;
+        </button>
+      ) : (
+        <button className="burger" onClick={openMenu}>
+          &times;
+        </button>
+      )}
+      <ul className={open ? "expanded" : ""}>
+        {links ? (
+          <>
+            {links.map((link, idx) => {
+              return (
+                <li key={idx}>
+                  <NavLink
+                    target={link.target}
+                    label={link.text}
+                    key={link.target}
+                    onClick={openMenu}
+                  />
+                </li>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink target="#" label="Home" key={"home"} />
+            </li>
+          </>
+        )}
+        {children}
+      </ul>
+    </nav>
+  );
 };
 
 export const Nav = styled(StyledNav)`

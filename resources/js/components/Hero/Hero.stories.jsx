@@ -1,5 +1,6 @@
+import React from "react";
 import { Hero } from "./Hero";
-import { Typography } from "../../atoms/Typography/Typography";
+import { Typography } from "@mui/material";
 
 const meta = {
   title: "Design System/Organisms/Hero",
@@ -14,9 +15,9 @@ export const Default = {
     heroimage: "./img/banner.jpg",
   },
   render: (args) => (
-    <Hero {...args}>
-      <Typography as={"h1"}>Auger Games</Typography>
-      <Typography as={"i"}>Beyod loot boxes</Typography>
+    <Hero heroimage={"./img/banner.jpg"}>
+      <Typography variant={"h1"}>Great Games</Typography>
+      <Typography variant={"subtitle1"}>Just play it!</Typography>
     </Hero>
   ),
 };
