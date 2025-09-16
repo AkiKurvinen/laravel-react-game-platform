@@ -94,8 +94,10 @@
                 const getUserHiscore = async () => {
                     const instance = new gameApi("button-clicker");
                     const gamestate = (await instance.getGamestate());
-
-                    return gamestate.score
+                    if (!gamestate || gamestate.score === undefined || gamestate.score === null) {
+                        return 0;
+                    }
+                    return gamestate.score;
                 }
 
                 const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);

@@ -44,10 +44,15 @@ const StyledNavLink = ({
   endicon,
   leftBorder,
   className,
+  anchor,
   ...props
 }) => {
+  // <a> tag for routes handled by Laravel (server-side)
   return (
-    <Link to={target} className={className} {...props}>{label}{endicon}</Link>
+    <>
+      {anchor && <a href={anchor} className={className} {...props}>{label}{endicon}</a>}
+      {!anchor && <Link to={target} className={className} {...props}>{label}{endicon}</Link>}
+    </>
   )
 };
 

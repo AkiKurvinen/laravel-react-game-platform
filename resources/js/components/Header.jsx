@@ -30,7 +30,6 @@ export default function Header() {
                     <>
                         <NavLink
                             leftBorder
-                            isNextLink
                             label={"Account"}
                             target={"/account"}
                             endicon={
@@ -44,7 +43,7 @@ export default function Header() {
                         ></NavLink>
                         <NavLink
                             leftBorder
-                            target="/logout"
+                            anchor="/logout"
                             endicon={<Icon icon="mui-logout" />}
                         />
 
