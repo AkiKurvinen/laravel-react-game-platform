@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "../NavLink/NavLink";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from 'react-router-hash-link';
 
 const StyledNav = ({
   links,
@@ -18,7 +18,7 @@ const StyledNav = ({
 
   return (
     <nav {...props}>
-      <Link to="/#hero" className="logo" {...props}>
+      <Link to="/#hero" className="logo">
         {logo ? (
           <img src={logo} alt="Great Games" />
         ) : (
@@ -81,6 +81,7 @@ export const Nav = styled(StyledNav)`
     overflow: hidden;
     position: absolute;
     right: 0;
+    top: 0;
   }
   ul li, ul a {
     float: left;
@@ -113,7 +114,7 @@ export const Nav = styled(StyledNav)`
   .burger {
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
-    display: block;
+    display: none;
     color: var(--mui-palette-background-paper);
     text-align: center;
     padding: 12px 25px;

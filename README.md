@@ -15,6 +15,11 @@ npm run dev
 ```
 http://localhost:8000
 
+*Open new terminal*
+```bash
+npm run storybook
+```
+http://localhost:6006
 
 ## Deployment
 ```bash
