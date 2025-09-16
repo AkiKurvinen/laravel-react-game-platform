@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
-import { Instagram, Facebook, LinkedIn, YouTube } from "@mui/icons-material";
+import { Instagram, Facebook, LinkedIn, YouTube, GitHub} from "@mui/icons-material";
 import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
@@ -28,6 +28,8 @@ const icon_base = (fill, stroke, box) => css`
 
 function getIcon(icon, className) {
   switch (true) {
+    case icon == "github":
+      return <GitHub className={className} />;
     case icon == "instagram":
       return <Instagram className={className} />;
     case icon == "facebook":
