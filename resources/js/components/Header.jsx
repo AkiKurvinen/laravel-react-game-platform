@@ -19,9 +19,9 @@ export default function Header() {
     return (
         <Nav
             links={[
-                { target: "./#popular-games", text: "Popular Games" },
-                { target: "./#new-games", text: "New Games" },
-                { target: "./#info", text: "About" },
+                { target: "/#popular-games", text: "Popular Games" },
+                { target: "/#new-games", text: "New Games" },
+                { target: "/#info", text: "About" },
             ]}
             logo="/img/games-logo-white.png"
         >
@@ -44,7 +44,7 @@ export default function Header() {
                         ></NavLink>
                         <NavLink
                             leftBorder
-                            href="/logout"
+                            target="/logout"
                             endicon={<Icon icon="mui-logout" />}
                         />
 
@@ -53,12 +53,12 @@ export default function Header() {
                         <NavLink
                             label="Login"
                             leftBorder
-                            href="/login"
+                            target="/login"
                         />
                         <NavLink
                             label="Register"
                             leftBorder
-                            href="/register" />
+                            target="/register" />
                     </>
             }
         </Nav>
