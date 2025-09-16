@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "../NavLink/NavLink";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { Link } from "react-router-dom";
 
 const StyledNav = ({
   links,
@@ -17,13 +18,13 @@ const StyledNav = ({
 
   return (
     <nav {...props}>
-      <a href="./#hero" className="logo">
+      <Link to="/#hero" className="logo" {...props}>
         {logo ? (
-          <img src={logo} width={500} height={500} alt="Great Games" />
+          <img src={logo} alt="Great Games" />
         ) : (
           <>Logo</>
         )}
-      </a>
+      </Link>
       {!open ? (
         <button className="burger" onClick={openMenu}>
           &equiv;

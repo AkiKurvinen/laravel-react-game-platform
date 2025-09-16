@@ -23,7 +23,7 @@ export default function Header() {
                 { target: "./#new-games", text: "New Games" },
                 { target: "./#info", text: "About" },
             ]}
-            logo="./img/games-logo-white.png"
+            logo="/img/games-logo-white.png"
         >
             {
                 loggedin === "true" ?
@@ -35,7 +35,7 @@ export default function Header() {
                             target={"/account"}
                             endicon={
                                 <Avatar
-                                    avatarimage={'img/avatar/user-avatar.png'}
+                                    avatarimage={'/img/avatar/user-avatar.png'}
                                     size="30px"
                                     isRounded={true}
                                     className="avatar"

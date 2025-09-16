@@ -22,10 +22,12 @@ export default function Login() {
         })
             .then(response => response.json())
             .then(data => {
-                setError(data)
-                setTimeout(() => {
-                    window.location.replace("/")
-                }, 2000)
+                setError(data);
+                if (data.message === "Login successful") {
+                    setTimeout(() => {
+                        window.location.replace("/");
+                    }, 2000);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
