@@ -1,6 +1,6 @@
 ## Instructions
 
-## Installation
+## Installation (legacy)
 ```bash
 composer install
 npm install
@@ -10,6 +10,7 @@ php artisan migrate
 npm run build
 php artisan serve
 ```
+
 open new terminal
 ```bash
 npm run dev

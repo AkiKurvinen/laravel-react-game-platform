@@ -5,7 +5,10 @@
     "build": "vite build",
     "dev": "vite",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "backend:init": "composer install && npm install && cp .env.example .env && php artisan key:generate && php artisan migrate && php artisan config:cache",
+    "backend:serve": "php artisan serve",
+    "setup": "npm install && npm run backend:init && npm run build"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
