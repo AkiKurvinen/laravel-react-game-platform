@@ -1,15 +1,18 @@
 ## Instructions
 
-## Installation
+## Installation (legacy)
 ```bash
-composer install
-npm install
+composer update --no-scripts
+php artisan clear-compiled 
+composer dump-autoload
+php artisan optimize
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
 npm run build
 php artisan serve
 ```
+
 open new terminal
 ```bash
 npm run dev

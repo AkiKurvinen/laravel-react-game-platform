@@ -62,8 +62,8 @@ const gallery_base = (
   .embed-container {
     position: relative;
     padding-bottom: ${(parseInt(aspectRatio.split("/")[1]) /
-      parseInt(aspectRatio.split("/")[0])) *
-    100}%;
+    parseInt(aspectRatio.split("/")[0])) *
+  100}%;
     height: 0;
     overflow: hidden;
     max-width: 100%;
@@ -127,7 +127,7 @@ function renderGalleryDisplay(item) {
         alt={item.desc}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = "https://augergames.com/img/augericon.png";
+          currentTarget.src = "./img/placeholder.jpg";
         }}
       />
     </div>

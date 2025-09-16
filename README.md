@@ -1,25 +1,20 @@
 # Laravel React game platform
 - Web app for online browser game platform
-- User accounst and game saves
+- User accounts and game saves
 
 ## Develpoment
 
 ```bash
-composer update --no-scripts
-php artisan clear-compiled 
-composer dump-autoload
-php artisan optimize
-cp .env.example .env
-php artisan config:cache
-php artisan key:generate
-php artisan config:cache
-php artisan migrate
-npm install
-npm run build
-php artisan serve
+npm run setup
+npm run backend:serve
+```
+
+*Open new terminal*
+```bash
 npm run dev
 ```
 http://localhost:8000
+
 
 ## Deployment
 ```bash

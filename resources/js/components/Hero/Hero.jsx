@@ -12,14 +12,10 @@ export const StyledHero = ({ heroimage, children, ...props }) => {
 };
 
 export const Hero = styled(StyledHero)`
-   height: 100vh; /* You must set a specified height */
+  height: 100vh; /* You must set a specified height */
   width: 100%;
   position: relative;
-  background: rgb(172,0,40);
-  background: -moz-linear-gradient(-180deg, rgba(172,0,40,1) 0%, rgba(255,49,98,1) 100%);
-  background: -webkit-linear-gradient(-180deg, rgba(172,0,40,1) 0%, rgba(255,49,98,1) 100%);
-  background: linear-gradient(-180deg, rgba(172,0,40,1) 0%, rgba(255,49,98,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ac0028",endColorstr="#ff3162",GradientType=1); 
+  background-color: var(--mui-palette-primary-main);
   & img{
     width: 100%;
     height: 100%;

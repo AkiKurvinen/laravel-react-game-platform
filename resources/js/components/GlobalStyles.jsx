@@ -1,7 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-
+html{
+  scroll-behavior: smooth;
+}
 body {
   scrollbar-width: thin;
   scrollbar-color: var(--mui-palette-primary-main) var(--mui-palette-background-paper);

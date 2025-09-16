@@ -19,7 +19,7 @@ function Main() {
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route path="account" element={<Account />}/>
+                <Route path="account" element={<Account />} />
                 <Route path="gamestart/:game" element={<GameStart />} />
             </Route>
         </Routes>

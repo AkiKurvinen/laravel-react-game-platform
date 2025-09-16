@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-
+import { Link } from "react-router-dom";
 
 const link_base = css`
   background-color: var(--mui-palette-secondary-main);
@@ -47,11 +47,9 @@ const StyledNavLink = ({
   ...props
 }) => {
   return (
-    <a href={target} className={className} {...props}>
-      {label}
-      {endicon}
-    </a>
-  );
+
+    <Link to={target} className={className} {...props}>{label}{endicon}</Link>
+  )
 };
 
 export const NavLink = styled(StyledNavLink)`

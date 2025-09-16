@@ -63,6 +63,12 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
+            "repositories": [
+                {
+                    "type": "composer",
+                    "url": "https://packagist.org"
+                }
+            ],
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
