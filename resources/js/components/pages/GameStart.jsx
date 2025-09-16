@@ -4,6 +4,7 @@ import { Button, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { useParams } from 'react-router-dom';
 import Leaderboard from '../small/Leaderboard';
+import Box from '@mui/material/Box';
 
 export default function GameStart() {
   const { game } = useParams();
@@ -27,33 +28,36 @@ export default function GameStart() {
       const lb = await Leaderboard(game);
       setLeaderboard(lb);
     }
-    fetchData();
+    fetchData().then(() => {
+      console.log('data fetched', leaderboard);
+    });
   }, []);
-  console.log(leaderboard)
-  return <>
-    <div className='m-2 w-100'>
-      <h1 className='m-2' >Hi there {user ? user.username : 'Guest'}</h1>
-      <div className="mt-2 d-flex justify-content-center m-2">
-        <div style={{ maxWidth: "900px", width: "100%" }}>
-          <div className='p-3 d-flex flex-column  m-2 w-100'>
-            <Button href={`/game/${game}/game/`} variant='contained' className='m-2 w-100'>pelaa</Button>
-            {
-              leaderboard.length > 0
-                ?
-                <>
-                  <h2 className='text-light'>{game} top 10 leaderboard:</h2>
-                  {
-                    leaderboard.map((record, idx) => (
-                      <p key={record.id || `${record.username}-${record.metric}-${idx}`} className='m-0 fs-4'>
-                        {record.username} | {record.metric}
-                      </p>
-                    ))
-                  }
-                </> : <></>
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  </>
+
+  return (
+    <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}>
+      <Typography variant="h1">{game}</Typography>
+      <Typography variant="body1">Hi there {user ? user.username : 'Guest'}</Typography>
+      <Box sx={{ maxWidth: 900, width: '100%', mt: 2 }}>
+        <Button href={`/game/${game}/game/`} variant='contained'>Play</Button>
+
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="overline">Top 10 leaderboard</Typography>
+          <br />
+          {
+            leaderboard.length > 0
+              ?
+              <>
+                {
+                  leaderboard.map((record, idx) => (
+                    <p key={record.id || `${record.username}-${record.metric}-${idx}`}>
+                      {record.username} | {record.metric}
+                    </p>
+                  ))
+                }
+              </> : <>no data</>
+          }
+        </Box>
+      </Box>
+
+    </Box>)
 }
