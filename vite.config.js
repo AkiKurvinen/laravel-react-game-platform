@@ -16,7 +16,9 @@ export default defineConfig({
       input: ['resources/js/app.js'],
       refresh: true
     }),
-    reactRefresh(),
+    reactRefresh(), react({
+      include: "**/*.tsx",
+    }),
     svgr()],
   test: {
     projects: [{

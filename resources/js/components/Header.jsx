@@ -19,11 +19,9 @@ export default function Header() {
     return (
         <Nav
             links={[
-                { target: "#games", text: "Games" },
-                { target: "#jams", text: "Jam Games" },
-                { target: "#boardgame", text: "Board Game" },
-                { target: "#other", text: "Tech Demos" },
-                { target: "#footer", text: "About" },
+                { target: "./#popular-games", text: "Popular Games" },
+                { target: "./#new-games", text: "New Games" },
+                { target: "./#info", text: "About" },
             ]}
             logo="./img/games-logo-white.png"
         >

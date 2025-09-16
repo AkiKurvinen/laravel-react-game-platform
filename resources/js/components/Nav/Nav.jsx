@@ -17,9 +17,9 @@ const StyledNav = ({
 
   return (
     <nav {...props}>
-      <a href="/#hero" className="logo">
+      <a href="./#hero" className="logo">
         {logo ? (
-          <img src={logo} width={500} height={500} alt="Auger Games" />
+          <img src={logo} width={500} height={500} alt="Great Games" />
         ) : (
           <>Logo</>
         )}

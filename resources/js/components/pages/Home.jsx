@@ -13,7 +13,6 @@ export default function Home() {
             const resp = await fetch("/gameinfo.json");
             const respJson = await resp.json();
             setGameInfo(respJson.sections);
-            console.log(respJson.sections);
         }
         fetchGameInfo();
     }, [])
@@ -33,8 +32,13 @@ export default function Home() {
                 </Section>
             ))
         }
-        
-        <Footer id="footer" />
 
+        <Section key={"info"} name={"Project info"} id={"info"}>
+            <Typography variant={"body1"}>This is a template project.</Typography>
+            <br />
+            <br />
+        </Section>
+
+        <Footer id="footer" />
     </>
 }

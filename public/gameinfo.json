@@ -1,67 +1,66 @@
 {
-    "sections":[
+    "sections": [
         {
             "name": "Popular games",
             "id": "popular-games",
-              "games": [
-        {
-            "name": "Button clicker",
-            "gallery": [
+            "games": [
                 {
-                    "original": "click-button-game.jpg"
-                }
-            ],
-            "description": "Button clicker game is fun to play!",
-            "link": "/gamestart/button-clicker"
-        },
-        {
-            "name": "Box mover",
-            "gallery": [
-                {
-                    "original": "drag-the-box-game.jpg",
-                    "thumbnail": "drag-the-box-game-small.jpg"
+                    "name": "Button clicker",
+                    "gallery": [
+                        {
+                            "original": "click-button-game.jpg"
+                        }
+                    ],
+                    "description": "Button clicker game is fun to play!",
+                    "link": "/gamestart/button-clicker"
                 },
                 {
-                    "original": "click-button-game.jpg",
-                    "thumbnail": "click-button-game-small.jpg"
+                    "name": "Box mover",
+                    "gallery": [
+                        {
+                            "original": "drag-the-box-game.jpg",
+                            "thumbnail": "drag-the-box-game-small.jpg"
+                        },
+                        {
+                            "original": "click-button-game.jpg",
+                            "thumbnail": "click-button-game-small.jpg"
+                        }
+                    ],
+                    "description": "Box mover game is a fun puzzle game!",
+                    "link": "/gamestart/box-mover"
                 }
-            ],
-            "description": "Box mover game is a fun puzzle game!",
-            "link": "/gamestart/box-mover"
-        }
-    ]
+            ]
         },
         {
             "name": "New games",
             "id": "new-games",
-              "games": [
-        {
-            "name": "Button clicker 2",
-            "gallery": [
+            "games": [
                 {
-                    "original": "click-button-game.jpg"
-                }
-            ],
-            "description": "Button clicker game is fun to play!",
-            "link": "/gamestart/button-clicker"
-        },
-        {
-            "name": "Box mover 2",
-            "gallery": [
-                {
-                    "original": "drag-the-box-game.jpg",
-                    "thumbnail": "drag-the-box-game-small.jpg"
+                    "name": "Button clicker 2",
+                    "gallery": [
+                        {
+                            "original": "click-button-game.jpg"
+                        }
+                    ],
+                    "description": "Button clicker game is fun to play!",
+                    "link": "/gamestart/button-clicker"
                 },
                 {
-                    "original": "click-button-game.jpg",
-                    "thumbnail": "click-button-game-small.jpg"
+                    "name": "Box mover 2",
+                    "gallery": [
+                        {
+                            "original": "drag-the-box-game.jpg",
+                            "thumbnail": "drag-the-box-game-small.jpg"
+                        },
+                        {
+                            "original": "click-button-game.jpg",
+                            "thumbnail": "click-button-game-small.jpg"
+                        }
+                    ],
+                    "description": "Box mover game is a fun puzzle game!",
+                    "link": "/gamestart/box-mover"
                 }
-            ],
-            "description": "Box mover game is a fun puzzle game!",
-            "link": "/gamestart/box-mover"
+            ]
         }
     ]
-        }
-    ]
-  
 }
