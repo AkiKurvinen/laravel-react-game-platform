@@ -1,6 +1,4 @@
 import React from "react";
-import { Typography } from "@mui/material";
-import { Colors } from "../Globals";
 
 export default async function Leaderboard(game) {
     var leaderboard = []

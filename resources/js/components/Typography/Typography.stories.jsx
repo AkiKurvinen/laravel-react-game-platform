@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 
 const meta = {
-  title: 'Components/Atoms/Typography',
+  title: 'Design System/Atoms/Typography',
   component: Typography,
   tags: ['autodocs'],
 };
