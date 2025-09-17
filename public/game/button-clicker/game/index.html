@@ -91,29 +91,64 @@
                     await instance.saveGamestate({ "score": click_count });
                     // hello, if youre reading this, what r u dooin??? why ar u here, GO AWAY!!!!
                 }
+
                 const getUserHiscore = async () => {
+                    
                     const instance = new gameApi("button-clicker");
                     const gamestate = (await instance.getGamestate());
+                    console.log(gamestate)
                     if (!gamestate || gamestate.score === undefined || gamestate.score === null) {
                         return 0;
                     }
                     return gamestate.score;
                 }
 
-                const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
+            const mockAutoLogin = async () => {
+                    const instance = new gameApi("button-clicker");
+                    const userinfo = (await instance.getUserInfo());
+                    console.log(userinfo)
 
+                    return userinfo;
+
+                    // mock login session
+                    const urlParams = new URLSearchParams(window.location.search);
+                    let isloggedin = urlParams.get('loggedin')
+
+                    let login_success = false
+                    if (isloggedin && isloggedin == "true") {
+                        login_success = true
+                    }
+                    user_id = 123
+                    user_name = "Test User"
+
+                    console.log("Call API - Auto Login", login_success)
+                    return login_success
+                }
+                // login form - loaded from HTML file
+                const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
+                const html_login_form = this.add.dom(350, 300).createFromCache('loginform');
+                
                 // first try to auto login user by session
-                const autologinsuccess = true
+                 const userinfo = await mockAutoLogin()
+
+                 const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
+                
                 if (autologinsuccess) {
+                    user_name   = userinfo.username
+                    user_id     = userinfo.id
+                    console.log("Auto login success", user_name, user_id)
+
+                    html_login_form.setVisible(false);
+                    text.setText(`Autologged as ${user_name} (${user_id})`);
 
                     // game specific stuff
                     const user_click_count = await getUserHiscore()
                     click_count = user_click_count === undefined ? 0 : user_click_count;
                     counter_txt.setText(`Click count: ${click_count}`)
-                    text.setText("logged in")
-
                 }
-
+                else {
+                    console.log("Not logged in")
+                }
 
                 const flash_effect = (target) => {
                     target.scene.tweens.add({

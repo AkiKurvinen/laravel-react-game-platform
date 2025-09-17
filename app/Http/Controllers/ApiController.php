@@ -21,8 +21,33 @@ use App\Models\Gamestate;
  *     bearerFormat="JWT"
  * )
  */
-class ApiController extends Controller
-{
+class ApiController extends Controller {
+    /**
+     * @OA\Get(
+     *     path="/api/userinfo",
+     *     tags={"API"},
+     *     summary="Get authenticated user info",
+     *     description="Requires authentication.",
+     *     security={{"apiAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User info returned"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
+     */
+    public function getUserInfo(Request $request) {
+        if (!Auth::check()) abort(401);
+        $user = Auth::user();
+        return response()->json([
+            'id' => $user->id,
+            'username' => $user->username,
+            // add other user fields if needed
+        ]);
+    }
     /**
      * @OA\Get(
      *     path="/api/gamestate/{game}",

@@ -37,4 +37,14 @@ class gameApi {
         const respJson = await resp.json();
         return JSON.parse(respJson.length > 0 ? respJson[0].data : null);
     }
+async getUserInfo() {
+    const resp = await fetch(`/api/userinfo`);
+    const contentType = resp.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+        return await resp.json();
+    } else {
+        // Handle error or unauthenticated case
+        return null;
+    }
+    }
 }

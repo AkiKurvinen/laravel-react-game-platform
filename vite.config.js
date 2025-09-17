@@ -2,7 +2,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
-import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -16,7 +15,7 @@ export default defineConfig({
       input: ['resources/js/app.js'],
       refresh: true
     }),
-    reactRefresh(), react({
+    react({
       include: "**/*.tsx",
     }),
     svgr()],
