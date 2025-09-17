@@ -102,34 +102,30 @@
                     }
                     return gamestate.score;
                 }
-
-            const mockAutoLogin = async () => {
+  
+                const autoLogin = async () => {
                     const instance = new gameApi("button-clicker");
                     const userinfo = (await instance.getUserInfo());
-                    console.log(userinfo)
-
                     return userinfo;
-
-                    // mock login session
-                    const urlParams = new URLSearchParams(window.location.search);
-                    let isloggedin = urlParams.get('loggedin')
-
-                    let login_success = false
-                    if (isloggedin && isloggedin == "true") {
-                        login_success = true
-                    }
-                    user_id = 123
-                    user_name = "Test User"
-
-                    console.log("Call API - Auto Login", login_success)
-                    return login_success
                 }
+                const loginUser = async (username_txt, login_password) => {
+                    const instance = new gameApi("button-clicker");
+                    const userinfo = (await instance.login({ username: username_txt, password: login_password }));
+                    return userinfo;
+                }  
+
+                const createAccount = async (username_txt, email_txt, login_password) => {
+                    const instance = new gameApi("button-clicker");
+                    const userinfo = (await instance.register({ username: username_txt, email: email_txt, password: login_password }));
+                    return userinfo;
+                }  
+
                 // login form - loaded from HTML file
                 const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
                 const html_login_form = this.add.dom(350, 300).createFromCache('loginform');
                 
                 // first try to auto login user by session
-                 const userinfo = await mockAutoLogin()
+                 const userinfo = await autoLogin()
 
                  const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
                 
@@ -146,10 +142,69 @@
                     click_count = user_click_count === undefined ? 0 : user_click_count;
                     counter_txt.setText(`Click count: ${click_count}`)
                 }
-                else {
-                    console.log("Not logged in")
+                 else {
+                    html_login_form.addListener('click');
                 }
+                
+                html_login_form.on('click', function (event, login) {
+                    if (event.target.name === 'login') {
+                        const username_txt = this.getChildByID('login_username');
+                        const login_password = this.getChildByID('login_password');
 
+                        if (username_txt.value == '' || login_password.value == '') return
+                        (async () => {
+                            const res = await loginUser(username_txt.value, login_password.value);
+                            if (!res) {
+                                flash_effect(this)
+                                console.log("Login failed")
+                                console.log(res)
+                                return
+                            }
+
+                            // game specific stuff
+                            const user_click_count = await getUserHiscore()
+                            click_count = user_click_count
+                            counter_txt.setText(`Click count: ${user_click_count}`)
+
+                            // Only remove login form if login succeeds
+                            this.removeListener('click');
+                            this.setVisible(false);
+                            text.setText(`Welcome back ${user_name} (${user_id})`);
+                        })();
+
+                    }
+                    else if (event.target.name === 'join') {
+                        (async () => {
+                            const join_username = this.getChildByID('join_username');
+                            const join_email = this.getChildByID('join_email');
+                            const join_password = this.getChildByID('join_password');
+                            const join_repeatpassword = this.getChildByID('join_repeatpassword');
+
+                            if (join_username.value == '' || join_email.value == '' || join_password.value == '' || join_repeatpassword.value == '') return;
+                            if (join_password.value != join_repeatpassword.value) return;
+
+                            const res = await createAccount(join_username.value, join_email.value, join_password.value);
+
+                            if (!res) {
+                                flash_effect(this)
+                                console.log("Register failed")
+                                console.log(res)
+                                return;
+                            }
+
+                            this.removeListener('click');
+                            this.setVisible(false);
+                            text.setText(`Welcome new ${user_name} (${user_id})`);
+                        })();
+                    }
+                    else if (event.target.name === 'skip') {
+                        this.removeListener('click');
+                        this.setVisible(false);
+                        user_name = '[guest]'
+                        user_id = 0
+                        text.setText(`Welcome ${user_name} (${user_id})`);
+                    }
+                });
                 const flash_effect = (target) => {
                     target.scene.tweens.add({
                         targets: text,

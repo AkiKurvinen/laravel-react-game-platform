@@ -37,14 +37,66 @@ class gameApi {
         const respJson = await resp.json();
         return JSON.parse(respJson.length > 0 ? respJson[0].data : null);
     }
-async getUserInfo() {
-    const resp = await fetch(`/api/userinfo`);
-    const contentType = resp.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
-        return await resp.json();
-    } else {
-        // Handle error or unauthenticated case
-        return null;
+
+    async getUserInfo() {
+        try {
+            const resp = await fetch(`/api/userinfo`);
+            const contentType = resp.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                return await resp.json();
+            } else {
+                return null;
+            }
+        } catch (error) {
+            return null;
+        }
     }
+
+    async login(data, setError) {
+        try {
+            const resp = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: data.username,
+                    password: data.password,
+                }),
+            });
+           const respJson = await resp.json();
+        return JSON.parse(respJson.length > 0 ? respJson[0].data : null);
+     } catch (error) {
+            console.error('--Error:', error);
+            return null;
+        }
+    }
+    
+    async register(data, setError) {
+        try {
+            const resp = await fetch("/api/register", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: data.username,
+                    email: data.email,
+                    password: data.password,
+                }),
+            });
+            const contentType = resp.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                const respJson = await resp.json();
+                if (setError) setError(respJson);
+                return resp.ok ? true : respJson.message;
+            } else {
+                if (setError) setError({ message: "Unexpected response format" });
+                return null;
+            }
+        } catch (error) {
+            console.error('--Error:', error);
+            return null;
+        }
     }
 }
