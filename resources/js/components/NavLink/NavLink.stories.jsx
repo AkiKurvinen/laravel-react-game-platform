@@ -10,7 +10,7 @@ export default meta;
 
 export const Default = {
     args: {
-        target: "#body",
+        anchor: "#body",
         label: "Link",
     },
 };
