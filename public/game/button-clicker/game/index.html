@@ -154,10 +154,19 @@
                         if (username_txt.value == '' || login_password.value == '') return
                         (async () => {
                             const res = await loginUser(username_txt.value, login_password.value);
+                            console.log("Login response", res.status)
                             if (!res) {
                                 flash_effect(this)
-                                console.log("Login failed")
+                                console.log("Login failed - no response")
                                 console.log(res)
+                                return
+                            }
+                            else if(!resp.ok && res.message) {
+                                const login_err = this.getChildByID('login_err');
+                                login_err.innerText = res.message
+                                flash_effect(this)
+                                console.log("Login failed - message", res.message)
+                                document.getElementById('login_err').innerText = res.message
                                 return
                             }
 
@@ -185,11 +194,29 @@
 
                             const res = await createAccount(join_username.value, join_email.value, join_password.value);
 
+                            // Only continue to login if registration succeeded and no error fields
+                            console.log("Register response", res)
                             if (!res) {
                                 flash_effect(this)
                                 console.log("Register failed")
-                                console.log(res)
                                 return;
+                            }
+                            if(!res.id) {
+                                const join_err = this.getChildByID('join_err');
+                                join_err.innerText = res.username || res.email || res.password || res.message;
+                                document.getElementById('join_err').innerText = res.username || res.email || res.password || res.message;
+                                flash_effect(this);
+                                console.log("Register failed - message", res.message);
+                                return;
+                            }
+
+                            // Registration success, now login
+                            const loginres = await loginUser(join_username.value, join_password.value);
+                            if (!loginres) {
+                                flash_effect(this)
+                                console.log("Login after register failed")
+                                console.log(loginres)
+                                return
                             }
 
                             this.removeListener('click');

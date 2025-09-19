@@ -1,4 +1,5 @@
 class gameApi {
+
     constructor(gameName) {
         this.gameName = gameName;
     }
@@ -38,65 +39,73 @@ class gameApi {
         return JSON.parse(respJson.length > 0 ? respJson[0].data : null);
     }
 
+    async getCsrfToken() {
+        return fetch('/api/csrf-token')
+            .then(resp => resp.ok ? resp.json() : null)
+            .catch(() => null);
+    }
+
     async getUserInfo() {
-        try {
-            const resp = await fetch(`/api/userinfo`);
-            const contentType = resp.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-                return await resp.json();
-            } else {
-                return null;
-            }
-        } catch (error) {
-            return null;
-        }
+        return fetch(`/api/userinfo`)
+            .then(resp => resp.ok ? resp.json() : null)
+            .catch(() => null);
     }
 
     async login(data, setError) {
-        try {
-            const resp = await fetch("/api/login", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: data.username,
-                    password: data.password,
-                }),
-            });
-           const respJson = await resp.json();
-        return JSON.parse(respJson.length > 0 ? respJson[0].data : null);
-     } catch (error) {
-            console.error('--Error:', error);
-            return null;
-        }
-    }
-    
-    async register(data, setError) {
-        try {
-            const resp = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: data.username,
-                    email: data.email,
-                    password: data.password,
-                }),
-            });
-            const contentType = resp.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
+        const csrf = await this.getCsrfToken();
+        const csrfToken = csrf && csrf.csrf_token ? csrf.csrf_token : null;
+        console.log("CSRF Token:", csrfToken);
+        return fetch("/api/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                ...(csrfToken ? { 'X-CSRF-TOKEN': csrfToken } : {})
+            },
+            body: JSON.stringify({
+                username: data.username,
+                password: data.password,
+            }),
+        })
+            .then(async resp => {
                 const respJson = await resp.json();
-                if (setError) setError(respJson);
-                return resp.ok ? true : respJson.message;
-            } else {
-                if (setError) setError({ message: "Unexpected response format" });
+                if (respJson && respJson.message && respJson.user) {
+                    console.log("resp ", respJson.message, respJson.user);
+                    return respJson.user;
+                }
+                else if (respJson && respJson.message) {
+                    return respJson
+                }
                 return null;
-            }
-        } catch (error) {
-            console.error('--Error:', error);
-            return null;
-        }
+            })
+            .catch(() => null);
+    }
+
+    async register(data, setError) {
+        const csrf = await this.getCsrfToken();
+        const csrfToken = csrf && csrf.csrf_token ? csrf.csrf_token : null;
+        return fetch("/api/register", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                ...(csrfToken ? { 'X-CSRF-TOKEN': csrfToken } : {})
+            },
+            body: JSON.stringify({
+                username: data.username,
+                email: data.email,
+                password: data.password,
+            }),
+        })
+            .then(async resp => {
+                const respJson = await resp.json();
+                if (respJson && respJson.message && respJson.user) {
+                    console.log("resp ", respJson.message, respJson.user);
+                    return respJson.user;
+                }
+                else if (respJson) {
+                    return respJson
+                }
+                return null;
+            })
+            .catch(() => null);
     }
 }
