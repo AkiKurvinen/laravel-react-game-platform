@@ -124,10 +124,16 @@
                     if (event.target.name === 'login') {
                         const res = await form_login_handler(html_login_form)
                         res && console.log("login ", res)
+                        if (res && res.username) {
+                            game_spec_stuff({ isNewUser: true })
+                        }
                     }
                     else if (event.target.name === 'join') {
                         const res = await form_join_handler(html_login_form)
                         res && console.log("join ", res)
+                        if (res && res.user) {
+                            game_spec_stuff(false)
+                        }
                     }
                     else if (event.target.name === 'skip') {
                         const res = await form_skip_handler(html_login_form)
@@ -135,12 +141,12 @@
                     }
                 }
 
-                const game_spec_stuff = async () => {
+                const game_spec_stuff = async (isNewUser) => {
                     // game specific stuff
                     const user_click_count = await getUserHiscore();
                     click_count = user_click_count;
                     counter_txt.setText(`Click count: ${user_click_count}`);
-                    text.setText(`Welcome back ${user_name} (${user_id})`);
+                    text.setText(`Welcome ${isNewUser ? 'new' : 'back'} ${user_name} (${user_id})`);
                 }
 
                 // manual form for login - join 

@@ -21,7 +21,7 @@ const form_login_handler = async (formElem) => {
         formElem.removeListener('click');
         formElem.setVisible(false);
 
-        return true
+        return res
 
     } catch (err) {
         const login_err = formElem.getChildByID('login_err');
@@ -50,7 +50,7 @@ const form_join_handler = async (formElem) => {
         if (!res.id) {
             throw new Error(res.username || res.email || res.password || res.message);
         }
-        // Registration success, now login
+        // Registration success, now login  
         const loginres = await loginUser(join_username.value, join_password.value);
         if (!loginres) {
             throw new Error("Login after register failed");
@@ -58,7 +58,8 @@ const form_join_handler = async (formElem) => {
         const userinfo = await autoLogin();
         formElem.removeListener('click');
         formElem.setVisible(false);
-        ingame_text.setText(`Welcome new ${userinfo.username} (${userinfo.id})`);
+        return userinfo
+
     } catch (err) {
         const join_err = formElem.getChildByID('join_err');
         join_err.innerText = err.message;
@@ -72,8 +73,7 @@ const form_skip_handler = async (formElem) => {
     formElem.setVisible(false);
     user_name = '[guest]';
     user_id = 0;
-    ingame_text.setText(`Welcome ${user_name} (${user_id})`);
-
+    return true;
 }
 
 const autoLogin = async () => {
