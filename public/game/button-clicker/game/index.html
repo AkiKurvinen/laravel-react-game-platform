@@ -4,6 +4,7 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     <script src="/game/gameLib/gameLib.js"></script>
+    <script src="./assets/loginform.js"></script>
     <link rel="shortcut icon" href="../img/button_logo.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/loginform.css">
 </head>
@@ -57,7 +58,6 @@
                     saveHiscore()
                 });
 
-
                 // button add counter
                 const button = this.add.text(400, 300, 'Button', {
                     fontFamily: 'Arial',
@@ -84,41 +84,18 @@
 
                 // game specific API Methods
                 const saveHiscore = async () => {
-                    // const json_send = { "user_id": user_id, "hiscore": click_count }
-                    // console.log("Call API - Save Hiscore", json_send)
                     const instance = new gameApi("button-clicker");
                     await instance.updateLeaderboard(click_count);
                     await instance.saveGamestate({ "score": click_count });
-                    // hello, if youre reading this, what r u dooin??? why ar u here, GO AWAY!!!!
                 }
 
                 const getUserHiscore = async () => {
-
                     const instance = new gameApi("button-clicker");
                     const gamestate = (await instance.getGamestate());
-                    console.log(gamestate)
                     if (!gamestate || gamestate.score === undefined || gamestate.score === null) {
                         return 0;
                     }
                     return gamestate.score;
-                }
-
-                const autoLogin = async () => {
-                    const instance = new gameApi("button-clicker");
-                    const userinfo = (await instance.getUserInfo());
-                    return userinfo;
-                }
-                
-                const loginUser = async (username_txt, login_password) => {
-                    const instance = new gameApi("button-clicker");
-                    const userinfo = await instance.login({ username: username_txt, password: login_password });
-                    return userinfo;
-                }
-
-                const createAccount = async (username_txt, email_txt, login_password) => {
-                    const instance = new gameApi("button-clicker");
-                    const userinfo = (await instance.register({ username: username_txt, email: email_txt, password: login_password }));
-                    return userinfo;
                 }
 
                 // login form - loaded from HTML file
@@ -127,14 +104,11 @@
 
                 // first try to auto login user by session
                 const userinfo = await autoLogin()
-
                 const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
 
                 if (autologinsuccess) {
                     user_name = userinfo.username
                     user_id = userinfo.id
-                    console.log("Auto login success", user_name, user_id)
-
                     html_login_form.setVisible(false);
                     text.setText(`Autologged as ${user_name} (${user_id})`);
 
@@ -146,96 +120,16 @@
                 else {
                     html_login_form.addListener('click');
                 }
-
-                html_login_form.on('click', function (event, login) {
-                    if (event.target.name === 'login') {
-                        const username_txt = this.getChildByID('login_username');
-                        const login_password = this.getChildByID('login_password');
-
-                        if (username_txt.value == '' || login_password.value == '') return;
-                        (async () => {
-                            try {
-                                const res = await loginUser(username_txt.value, login_password.value);
-                                if (!res) {
-                                    throw new Error("Login failed - no response");
-                                }
-                                if (res.message) {
-                                    throw new Error(res.message);
-                                }
-                                // game specific stuff
-                                const user_click_count = await getUserHiscore();
-                                click_count = user_click_count;
-                                counter_txt.setText(`Click count: ${user_click_count}`);
-                                // Only remove login form if login succeeds
-                                this.removeListener('click');
-                                this.setVisible(false);
-                                text.setText(`Welcome back ${user_name} (${user_id})`);
-                            } catch (err) {
-                                flash_effect(this);
-                                const login_err = this.getChildByID('login_err');
-                                login_err.innerText = err.message;
-                                document.getElementById('login_err').innerText = err.message;
-                                console.log("Login error:", err);
-                            }
-                        })();
-                    }
-                    else if (event.target.name === 'join') {
-                        (async () => {
-                            const join_username = this.getChildByID('join_username');
-                            const join_email = this.getChildByID('join_email');
-                            const join_password = this.getChildByID('join_password');
-                            const join_repeatpassword = this.getChildByID('join_repeatpassword');
-                            try {
-                                if (join_username.value == '' || join_email.value == '' || join_password.value == '' || join_repeatpassword.value == '') {
-                                    throw new Error("All fields are required");
-                                };
-                                if (join_password.value != join_repeatpassword.value) {
-                                    throw new Error("Passwords do not match");
-                                };
-
-                                const res = await createAccount(join_username.value, join_email.value, join_password.value);
-                                console.log("Register response", res);
-                                if (!res) {
-                                    throw new Error("Register failed");
-                                }
-                                if (!res.id) {
-                                    throw new Error(res.username || res.email || res.password || res.message);
-                                }
-                                // Registration success, now login
-                                const loginres = await loginUser(join_username.value, join_password.value);
-                                if (!loginres) {
-                                    throw new Error("Login after register failed");
-                                }
-                                const userinfo = await autoLogin()
-                                this.removeListener('click');
-                                this.setVisible(false);
-                                text.setText(`Welcome new ${userinfo.username} (${userinfo.id})`);
-                            } catch (err) {
-                                flash_effect(this);
-                                const join_err = this.getChildByID('join_err');
-                                join_err.innerText = err.message;
-                                document.getElementById('join_err').innerText = err.message;
-                                console.log("Register error:", err);
-                            }
-                        })();
-                    }
-                    else if (event.target.name === 'skip') {
-                        this.removeListener('click');
-                        this.setVisible(false);
-                        user_name = '[guest]'
-                        user_id = 0
-                        text.setText(`Welcome ${user_name} (${user_id})`);
-                    }
-                });
-                const flash_effect = (target) => {
-                    target.scene.tweens.add({
-                        targets: text,
-                        alpha: 0.2,
-                        duration: 250,
-                        ease: 'Power3',
-                        yoyo: true
-                    });
+                const game_spec_stuff = async () => {
+                    // game specific stuff
+                    const user_click_count = await getUserHiscore();
+                    click_count = user_click_count;
+                    counter_txt.setText(`Click count: ${user_click_count}`);
+                    ingame_text.setText(`Welcome back ${user_name} (${user_id})`);
                 }
+                
+                // manual form for login - join 
+                html_login_form.on('click', click_handler);
             }
 
         }
