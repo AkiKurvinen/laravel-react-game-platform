@@ -93,7 +93,7 @@
                 }
 
                 const getUserHiscore = async () => {
-                    
+
                     const instance = new gameApi("button-clicker");
                     const gamestate = (await instance.getGamestate());
                     console.log(gamestate)
@@ -102,36 +102,37 @@
                     }
                     return gamestate.score;
                 }
-  
+
                 const autoLogin = async () => {
                     const instance = new gameApi("button-clicker");
                     const userinfo = (await instance.getUserInfo());
                     return userinfo;
                 }
+                
                 const loginUser = async (username_txt, login_password) => {
                     const instance = new gameApi("button-clicker");
-                    const userinfo = (await instance.login({ username: username_txt, password: login_password }));
+                    const userinfo = await instance.login({ username: username_txt, password: login_password });
                     return userinfo;
-                }  
+                }
 
                 const createAccount = async (username_txt, email_txt, login_password) => {
                     const instance = new gameApi("button-clicker");
                     const userinfo = (await instance.register({ username: username_txt, email: email_txt, password: login_password }));
                     return userinfo;
-                }  
+                }
 
                 // login form - loaded from HTML file
                 const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
                 const html_login_form = this.add.dom(350, 300).createFromCache('loginform');
-                
-                // first try to auto login user by session
-                 const userinfo = await autoLogin()
 
-                 const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
-                
+                // first try to auto login user by session
+                const userinfo = await autoLogin()
+
+                const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
+
                 if (autologinsuccess) {
-                    user_name   = userinfo.username
-                    user_id     = userinfo.id
+                    user_name = userinfo.username
+                    user_id = userinfo.id
                     console.log("Auto login success", user_name, user_id)
 
                     html_login_form.setVisible(false);
@@ -142,45 +143,41 @@
                     click_count = user_click_count === undefined ? 0 : user_click_count;
                     counter_txt.setText(`Click count: ${click_count}`)
                 }
-                 else {
+                else {
                     html_login_form.addListener('click');
                 }
-                
+
                 html_login_form.on('click', function (event, login) {
                     if (event.target.name === 'login') {
                         const username_txt = this.getChildByID('login_username');
                         const login_password = this.getChildByID('login_password');
 
-                        if (username_txt.value == '' || login_password.value == '') return
+                        if (username_txt.value == '' || login_password.value == '') return;
                         (async () => {
-                            const res = await loginUser(username_txt.value, login_password.value);
-                            console.log("Login response", res.status)
-                            if (!res) {
-                                flash_effect(this)
-                                console.log("Login failed - no response")
-                                console.log(res)
-                                return
-                            }
-                            else if(!resp.ok && res.message) {
+                            try {
+                                const res = await loginUser(username_txt.value, login_password.value);
+                                if (!res) {
+                                    throw new Error("Login failed - no response");
+                                }
+                                if (res.message) {
+                                    throw new Error(res.message);
+                                }
+                                // game specific stuff
+                                const user_click_count = await getUserHiscore();
+                                click_count = user_click_count;
+                                counter_txt.setText(`Click count: ${user_click_count}`);
+                                // Only remove login form if login succeeds
+                                this.removeListener('click');
+                                this.setVisible(false);
+                                text.setText(`Welcome back ${user_name} (${user_id})`);
+                            } catch (err) {
+                                flash_effect(this);
                                 const login_err = this.getChildByID('login_err');
-                                login_err.innerText = res.message
-                                flash_effect(this)
-                                console.log("Login failed - message", res.message)
-                                document.getElementById('login_err').innerText = res.message
-                                return
+                                login_err.innerText = err.message;
+                                document.getElementById('login_err').innerText = err.message;
+                                console.log("Login error:", err);
                             }
-
-                            // game specific stuff
-                            const user_click_count = await getUserHiscore()
-                            click_count = user_click_count
-                            counter_txt.setText(`Click count: ${user_click_count}`)
-
-                            // Only remove login form if login succeeds
-                            this.removeListener('click');
-                            this.setVisible(false);
-                            text.setText(`Welcome back ${user_name} (${user_id})`);
                         })();
-
                     }
                     else if (event.target.name === 'join') {
                         (async () => {
@@ -188,40 +185,38 @@
                             const join_email = this.getChildByID('join_email');
                             const join_password = this.getChildByID('join_password');
                             const join_repeatpassword = this.getChildByID('join_repeatpassword');
+                            try {
+                                if (join_username.value == '' || join_email.value == '' || join_password.value == '' || join_repeatpassword.value == '') {
+                                    throw new Error("All fields are required");
+                                };
+                                if (join_password.value != join_repeatpassword.value) {
+                                    throw new Error("Passwords do not match");
+                                };
 
-                            if (join_username.value == '' || join_email.value == '' || join_password.value == '' || join_repeatpassword.value == '') return;
-                            if (join_password.value != join_repeatpassword.value) return;
-
-                            const res = await createAccount(join_username.value, join_email.value, join_password.value);
-
-                            // Only continue to login if registration succeeded and no error fields
-                            console.log("Register response", res)
-                            if (!res) {
-                                flash_effect(this)
-                                console.log("Register failed")
-                                return;
-                            }
-                            if(!res.id) {
-                                const join_err = this.getChildByID('join_err');
-                                join_err.innerText = res.username || res.email || res.password || res.message;
-                                document.getElementById('join_err').innerText = res.username || res.email || res.password || res.message;
+                                const res = await createAccount(join_username.value, join_email.value, join_password.value);
+                                console.log("Register response", res);
+                                if (!res) {
+                                    throw new Error("Register failed");
+                                }
+                                if (!res.id) {
+                                    throw new Error(res.username || res.email || res.password || res.message);
+                                }
+                                // Registration success, now login
+                                const loginres = await loginUser(join_username.value, join_password.value);
+                                if (!loginres) {
+                                    throw new Error("Login after register failed");
+                                }
+                                const userinfo = await autoLogin()
+                                this.removeListener('click');
+                                this.setVisible(false);
+                                text.setText(`Welcome new ${userinfo.username} (${userinfo.id})`);
+                            } catch (err) {
                                 flash_effect(this);
-                                console.log("Register failed - message", res.message);
-                                return;
+                                const join_err = this.getChildByID('join_err');
+                                join_err.innerText = err.message;
+                                document.getElementById('join_err').innerText = err.message;
+                                console.log("Register error:", err);
                             }
-
-                            // Registration success, now login
-                            const loginres = await loginUser(join_username.value, join_password.value);
-                            if (!loginres) {
-                                flash_effect(this)
-                                console.log("Login after register failed")
-                                console.log(loginres)
-                                return
-                            }
-
-                            this.removeListener('click');
-                            this.setVisible(false);
-                            text.setText(`Welcome new ${user_name} (${user_id})`);
                         })();
                     }
                     else if (event.target.name === 'skip') {
