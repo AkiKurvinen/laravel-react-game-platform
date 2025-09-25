@@ -49,4 +49,4 @@ POST /api/leaderboard/<game name> --> BODY: {'metric': 5}
 ```
 
 ## License
-This project is a fork of [php-ohjelmointiprojekti-koodit-dream-team](https://github.com/tredu/php-ohjelmointiprojekti-koodit-dream-team) by Tampereen seudun ammattiopisto Tredu. The original project is licensed under the MIT License.
+This project is a fork of *php-ohjelmointiprojekti-koodit-dream-team* created by @ilikeopsec, @N1louuu and @TMankinen95. The original project created in Tampere vocational college Tredu is licensed under the MIT License.

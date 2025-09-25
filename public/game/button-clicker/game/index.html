@@ -4,8 +4,9 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     <script src="/game/gameLib/gameLib.js"></script>
+    <script src="/game/assets/loginform.js"></script>
     <link rel="shortcut icon" href="../img/button_logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets/loginform.css">
+    <link rel="stylesheet" href="/game/assets/loginform.css">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
             }
 
             preload() {
-                this.load.html('loginform', 'assets/loginform.html');
+                this.load.html('loginform', '/game/assets/loginform.html');
             }
             addToCounter() {
                 click_count++
@@ -57,7 +58,6 @@
                     saveHiscore()
                 });
 
-
                 // button add counter
                 const button = this.add.text(400, 300, 'Button', {
                     fontFamily: 'Arial',
@@ -84,13 +84,11 @@
 
                 // game specific API Methods
                 const saveHiscore = async () => {
-                    // const json_send = { "user_id": user_id, "hiscore": click_count }
-                    // console.log("Call API - Save Hiscore", json_send)
                     const instance = new gameApi("button-clicker");
                     await instance.updateLeaderboard(click_count);
                     await instance.saveGamestate({ "score": click_count });
-                    // hello, if youre reading this, what r u dooin??? why ar u here, GO AWAY!!!!
                 }
+
                 const getUserHiscore = async () => {
                     const instance = new gameApi("button-clicker");
                     const gamestate = (await instance.getGamestate());
@@ -100,30 +98,59 @@
                     return gamestate.score;
                 }
 
+                // login form - loaded from HTML file
                 const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
+                const html_login_form = this.add.dom(350, 300).createFromCache('loginform');
 
                 // first try to auto login user by session
-                const autologinsuccess = true
+                const userinfo = await autoLogin()
+                const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
+
                 if (autologinsuccess) {
+                    user_name = userinfo.username
+                    user_id = userinfo.id
+                    html_login_form.setVisible(false);
+                    text.setText(`Autologged as ${user_name} (${user_id})`);
 
                     // game specific stuff
                     const user_click_count = await getUserHiscore()
                     click_count = user_click_count === undefined ? 0 : user_click_count;
                     counter_txt.setText(`Click count: ${click_count}`)
-                    text.setText("logged in")
-
+                }
+                else {
+                    html_login_form.addListener('click');
+                }
+                const click_handler = async (event) => {
+                    if (event.target.name === 'login') {
+                        const res = await form_login_handler(html_login_form)
+                        res && console.log("login ", res)
+                        if (res && res.username) {
+                            game_spec_stuff({ isNewUser: true })
+                        }
+                    }
+                    else if (event.target.name === 'join') {
+                        const res = await form_join_handler(html_login_form)
+                        res && console.log("join ", res)
+                        if (res && res.user) {
+                            game_spec_stuff(false)
+                        }
+                    }
+                    else if (event.target.name === 'skip') {
+                        const res = await form_skip_handler(html_login_form)
+                        res && console.log("skip ", res)
+                    }
                 }
 
-
-                const flash_effect = (target) => {
-                    target.scene.tweens.add({
-                        targets: text,
-                        alpha: 0.2,
-                        duration: 250,
-                        ease: 'Power3',
-                        yoyo: true
-                    });
+                const game_spec_stuff = async (isNewUser) => {
+                    // game specific stuff
+                    const user_click_count = await getUserHiscore();
+                    click_count = user_click_count;
+                    counter_txt.setText(`Click count: ${user_click_count}`);
+                    text.setText(`Welcome ${isNewUser ? 'new' : 'back'} ${user_name} (${user_id})`);
                 }
+
+                // manual form for login - join 
+                html_login_form.on('click', click_handler);
             }
 
         }

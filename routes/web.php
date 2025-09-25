@@ -29,11 +29,14 @@ Route::get("/api/user", function(Request $request){
         "email" => Auth::user()->email,
     ];
 });
-
+Route::get('/api/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
 Route::get("/api/gamestate/{game}", [ApiController::class, 'getGamestate']);
 Route::post("/api/gamestate/{game}", [ApiController::class, 'postGamestate']);
 Route::get("/api/leaderboard/{game}", [ApiController::class, 'getLeaderboard']);
 Route::post("/api/leaderboard/{game}", [ApiController::class, 'postLeaderboard']);
+Route::get("/api/userinfo", [ApiController::class, 'getUserInfo']);
 Route::post('/api/register', [RegisterController::class, 'register']);
 Route::post('/api/login', [LoginController::class, 'login']);
 Route::post('/api/account', [UserController::class, 'accountsettings']);
