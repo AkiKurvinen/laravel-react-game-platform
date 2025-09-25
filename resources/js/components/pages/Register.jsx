@@ -44,32 +44,35 @@ export default function Register() {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <b className='fs-4 fw-900 text-uppercase'>Register</b>
                 </div>
-                <TextField {...register('username', { required: true })} className='mb-1 mt-2' variant="outlined" label="Username" name="username" />
+                <TextField {...register('username', { required: true })} className='mb-1 mt-2' 
+                variant="outlined" label="Username" name="username" data-cy="form-register-username"/>
                 {
                     'username' in error
                         ? Errors(error["username"])
                         : <></>
                 }
-                <TextField {...register('email', { required: true })} className='mb-1 mt-2' variant="outlined" label="Email" name="email" />
+                <TextField {...register('email', { required: true })} className='mb-1 mt-2' 
+                variant="outlined" label="Email" name="email" data-cy="form-register-email"/>
                 {
                     'email' in error
                         ? Errors(error["email"])
                         : <></>
                 }
                 <TextField type='password' {...register('password', { required: true })} className='mb-1 mt-2'
-                    variant="outlined" label="Password" name="password" />
+                    variant="outlined" label="Password" name="password" data-cy="form-register-password"/>
                 {
                     'password' in error
                         ? Errors(error["password"])
                         : <></>
                 }
                 <TextField type='password' {...register('repeatPassword', { required: true })}
-                    className='mb-1 mt-2' variant="outlined" label="Repeat Password" name="repeatPassword" />
+                    className='mb-1 mt-2' variant="outlined" label="Repeat Password" name="repeatPassword" 
+                    data-cy="form-register-repeat-password"/>
                 {repeatError && <Typography color="error">{repeatError}</Typography>}
                 <Button onClick={handleSubmit(onSubmit)} type="submit" variant='contained' className='mb-2 mt-2 w-100'>Register</Button>
                 {
                     'message' in error
-                        ? <Typography>{error['message']}. <a href="/login">Click here to login to your new account</a></Typography>
+                        ? <Typography>{error['message']}. <a href="/login" data-cy="form-register-success-link">Click here to login to your new account</a></Typography>
                         : <></>
                 }
             </FormControl>

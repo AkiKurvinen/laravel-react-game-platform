@@ -40,11 +40,13 @@ export default function Header() {
                                     className="avatar"
                                 />
                             }
+                            data-cy="nav-link-account"
                         ></NavLink>
                         <NavLink
                             leftBorder
                             anchor="/logout"
                             endicon={<Icon icon="mui-logout" />}
+                            data-cy="nav-link-logout"
                         />
 
                     </>
@@ -53,11 +55,14 @@ export default function Header() {
                             label="Login"
                             leftBorder
                             target="/login"
+                            data-cy="nav-link-login"
                         />
                         <NavLink
                             label="Register"
                             leftBorder
-                            target="/register" />
+                            target="/register"
+                            data-cy="nav-link-register"
+                        />
                     </>
             }
         </Nav>

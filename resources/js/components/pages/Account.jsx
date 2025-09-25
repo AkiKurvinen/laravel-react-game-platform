@@ -54,12 +54,20 @@ export default function Account() {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <b className='fs-4 fw-900 text-uppercase'>Account settings</b>
                 </div>
-                <TextField value={username} onChange={(e) => { setUsername(e.target.value) }} className='mb-1 mt-2' variant="outlined" label="Username" name="username" />
-                <TextField value={email} onChange={(e) => { setEmail(e.target.value) }} className='mb-1 mt-2' variant="outlined" label="Email" name="email" />
-                <TextField value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} type='password' className='mb-1 mt-2' variant="outlined" label="New password (optional)" name="password" />
-                <TextField value={repeatPassword} onChange={(e) => { setRepeatPassword(e.target.value) }} type='password' className='mb-1 mt-2' variant="outlined" label="Repeat new password" name="repeatPassword" />
+                <TextField value={username} onChange={(e) => { setUsername(e.target.value) }} 
+                className='mb-1 mt-2' variant="outlined" label="Username" name="username" 
+                data-cy="form-account-username"/>
+                <TextField value={email} onChange={(e) => { setEmail(e.target.value) }} 
+                className='mb-1 mt-2' variant="outlined" label="Email" name="email" 
+                data-cy="form-account-email"/>
+                <TextField value={newPassword} onChange={(e) => { setNewPassword(e.target.value) }} type='password' className='mb-1 mt-2' variant="outlined" 
+                label="New password (optional)" name="password" data-cy="form-account-password"/>
+                <TextField value={repeatPassword} onChange={(e) => { setRepeatPassword(e.target.value) }} 
+                type='password' className='mb-1 mt-2' variant="outlined" label="Repeat new password" 
+                name="repeatPassword" data-cy="form-account-repeat-password"/>
                 {repeatError && <Typography color="error">{repeatError}</Typography>}
-                <Button onClick={() => { saveSettings() }} variant='contained' className='mb-2 mt-2 w-100'>Save changes</Button>
+                <Button onClick={() => { saveSettings() }} variant='contained' className='mb-2 mt-2 w-100' 
+                data-cy="form-account-save-button">Save changes</Button>
                 {
                     'message' in message
                         ?

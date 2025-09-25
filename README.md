@@ -21,6 +21,11 @@ npm run storybook
 ```
 http://localhost:6006
 
+## Test
+```bash
+npx cypress open
+```
+
 ## Deployment
 ```bash
 php artisan key:generate

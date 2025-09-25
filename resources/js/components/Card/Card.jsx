@@ -5,11 +5,11 @@ import { Button, TextField } from '@mui/material';
 import { Gallery } from '../Gallery/Gallery';
 const UnstyledCard = ({ game, ...props }) => {
     return (
-        <div key={game.id || game.name} {...props}>
+        <div key={game.id || game.name} {...props} data-cy={`card-${game.name}`}>
             <div>
                 <h2>{game.name}</h2>
                 <p>{game.description}</p>
-                <Button variant='contained' href={game.link}>Play</Button>
+                <Button variant='contained' href={game.link} data-cy="card-button-play">Play</Button>
             </div>
             <Gallery
                 images={game.gallery}
