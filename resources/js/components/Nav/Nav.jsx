@@ -18,7 +18,7 @@ const StyledNav = ({
 
   return (
     <nav {...props}>
-      <Link to="/#hero" className="logo">
+      <Link to="/#hero" className="logo" data-cy="nav-link-logo">
         {logo ? (
           <img src={logo} alt="Great Games" />
         ) : (
@@ -26,11 +26,11 @@ const StyledNav = ({
         )}
       </Link>
       {!open ? (
-        <button className="burger" onClick={openMenu}>
+        <button className="burger" onClick={openMenu} data-cy="nav-link-burger">
           &equiv;
         </button>
       ) : (
-        <button className="burger" onClick={openMenu}>
+        <button className="burger" onClick={openMenu} data-cy="nav-link-burger">
           &times;
         </button>
       )}
@@ -45,6 +45,7 @@ const StyledNav = ({
                     label={link.text}
                     key={link.target}
                     onClick={openMenu}
+                    data-cy={`nav-link-${link.target}`}
                   />
                 </li>
               );
@@ -53,7 +54,7 @@ const StyledNav = ({
         ) : (
           <>
             <li>
-              <NavLink target="#" label="Home" key={"home"} />
+              <NavLink target="#" label="Home" key={"home"} data-cy="nav-link-home" />
             </li>
           </>
         )}

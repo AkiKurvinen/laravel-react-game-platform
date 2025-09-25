@@ -39,8 +39,11 @@ export default function Login() {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <b className='fs-4 fw-900 text-uppercase'>Login</b>
                 </div>
-                <TextField {...register('username', { required: true })} className='mb-1 mt-2' variant="outlined" label="Username" name="username" />
-                <TextField type='password' {...register('password', { required: true })} className='mb-1 mt-2' variant="outlined" label="Password" name="password" />
+                <TextField {...register('username', { required: true })} 
+                className='mb-1 mt-2' variant="outlined" label="Username" name="username" 
+                 data-cy="form-login-username"/>
+                <TextField type='password' {...register('password', { required: true })} className='mb-1 mt-2' variant="outlined" label="Password" name="password" 
+                 data-cy="form-login-password"/>
                 <Button onClick={handleSubmit(onSubmit)} type="submit" variant='contained' className='mb-2 mt-2 w-100'>Login</Button>
                 {
                     'message' in error
