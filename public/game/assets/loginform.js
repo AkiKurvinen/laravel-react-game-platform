@@ -1,5 +1,4 @@
 const form_login_handler = async (formElem) => {
-    console.log("formElem", formElem)
     const username_txt = formElem.getChildByID('login_username');
     const login_password = formElem.getChildByID('login_password');
     try {
@@ -71,9 +70,8 @@ const form_join_handler = async (formElem) => {
 const form_skip_handler = async (formElem) => {
     formElem.removeListener('click');
     formElem.setVisible(false);
-    user_name = '[guest]';
-    user_id = 0;
-    return true;
+    const guest_user = { username: '[guest]', id: 0 };
+    return guest_user
 }
 
 const autoLogin = async () => {

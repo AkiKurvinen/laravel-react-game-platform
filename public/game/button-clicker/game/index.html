@@ -97,6 +97,36 @@
                     }
                     return gamestate.score;
                 }
+                const game_specific_stuff = async (user, isNewUser, skip) => {
+                    const user_click_count = await getUserHiscore();
+                    click_count = user_click_count;
+                    counter_txt.setText(`Click count: ${user_click_count}`);
+                    if (skip) {
+                        button_score.setVisible(false);
+                        text.setText(`Welcome ${user.username} (${user.id})`);
+                        return true;
+                    }
+                    text.setText(`Welcome ${isNewUser ? 'new' : 'back'} ${user.username} (${user.id})`);
+                    return true;
+                }
+                const click_handler = async (event) => {
+                    if (event.target.name === 'login') {
+                        const res = await form_login_handler(html_login_form)
+                        if (res && res.username) {
+                            const game_setup = await game_specific_stuff(res, false, false)
+                        }
+                    }
+                    else if (event.target.name === 'join') {
+                        const res = await form_join_handler(html_login_form)
+                        if (res && res.username) {
+                            const game_setup = await game_specific_stuff(res, true, false)
+                        }
+                    }
+                    else if (event.target.name === 'skip') {
+                        const res = await form_skip_handler(html_login_form)
+                        const game_setup = await game_specific_stuff(res, false, true)
+                    }
+                }
 
                 // login form - loaded from HTML file
                 const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
@@ -106,51 +136,24 @@
                 const userinfo = await autoLogin()
                 const autologinsuccess = userinfo && userinfo.id !== undefined && userinfo.id !== null
 
-                if (autologinsuccess) {
-                    user_name = userinfo.username
-                    user_id = userinfo.id
-                    html_login_form.setVisible(false);
-                    text.setText(`Autologged as ${user_name} (${user_id})`);
-
-                    // game specific stuff
-                    const user_click_count = await getUserHiscore()
-                    click_count = user_click_count === undefined ? 0 : user_click_count;
-                    counter_txt.setText(`Click count: ${click_count}`)
-                }
-                else {
+                if (!autologinsuccess) {
                     html_login_form.addListener('click');
-                }
-                const click_handler = async (event) => {
-                    if (event.target.name === 'login') {
-                        const res = await form_login_handler(html_login_form)
-                        res && console.log("login ", res)
-                        if (res && res.username) {
-                            game_spec_stuff({ isNewUser: true })
-                        }
-                    }
-                    else if (event.target.name === 'join') {
-                        const res = await form_join_handler(html_login_form)
-                        res && console.log("join ", res)
-                        if (res && res.user) {
-                            game_spec_stuff(false)
-                        }
-                    }
-                    else if (event.target.name === 'skip') {
-                        const res = await form_skip_handler(html_login_form)
-                        res && console.log("skip ", res)
-                    }
+                    html_login_form.on('click', click_handler);
+                    return
                 }
 
-                const game_spec_stuff = async (isNewUser) => {
-                    // game specific stuff
-                    const user_click_count = await getUserHiscore();
-                    click_count = user_click_count;
-                    counter_txt.setText(`Click count: ${user_click_count}`);
-                    text.setText(`Welcome ${isNewUser ? 'new' : 'back'} ${user_name} (${user_id})`);
-                }
+                user_name = userinfo.username
+                user_id = userinfo.id
+                html_login_form.setVisible(false);
+                text.setText(`Autologged as ${user_name} (${user_id})`);
 
-                // manual form for login - join 
-                html_login_form.on('click', click_handler);
+                // game specific stuff
+                const user_click_count = await getUserHiscore()
+                click_count = user_click_count === undefined ? 0 : user_click_count;
+                counter_txt.setText(`Click count: ${click_count}`)
+
+
+
             }
 
         }
