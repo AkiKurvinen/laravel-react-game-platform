@@ -13,6 +13,12 @@ npm run build
 php artisan serve
 ```
 
+*cache directory must be present and writable error*
+```bash
+mkdir -p bootstrap/cache
+chmod -R 775 bootstrap/cache
+```
+
 open new terminal
 ```bash
 npm run dev

@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Box mover</title>
-    <script src="../loginform.js"></script>
-    <link rel="shortcut icon" href="game/img/box_logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <script src="assets/loginform.js"></script>
+    <script src="gameLib/gameLib.js"></script>
+    <link rel="shortcut icon" href="box-mover/img/box_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="box-mover/style.css">
 </head>
 
 <body>
     <header>
         <p style="color: var(--primary-main);">Common auth API / SESSION</p>
-        <div id="login_btn"></div>
+        <div id="login_section"></div>
         <p style="color: var(--secondary-main);">Game specific API</p>
         <div id="my_stats"></div>
         <br>
@@ -51,31 +52,83 @@
     <main>
         <h1>Box mover game</h1>
         <p>Info about the game</p>
-        <a href="" id="play_link">Play now</a>
+        <a href="/game/box-mover/game/" id="play_link">Play now</a>
         <br>
-        <br>
+        <br><br>
+        <a href="/">Back</a>
     </main>
 </body>
 <script>
-    // simulate common authentication API
-    // const loggedin = userIsLoggedin();
-    // const login_btn_elem = document.getElementById("login_btn")
-    // login_btn_elem.innerHTML = loggedin ? ' Welcome ' : ''
-    // login_btn_elem.innerHTML += loginbutton()
-    route = window.location.href
-    console.log(route)
-    // document.querySelector("main").innerHTML += `<a href="../?loggedin=${loggedin}">Back</a>`
-    document.getElementById("play_link").setAttribute("href", route+`/game/?loggedin=${true}`)
+    getboxmoverLeaderboard = async () => {
+        const result = await fetch(`/api/allgamestates/box-mover`);
+        const resultJson = await result.json();
+        return resultJson
+    }
 
-    // simulate game specific API
-    const account_loggedin = document.querySelector(".account_box").getAttribute("loggedin") == "true"
-    const my_stats_elem = document.getElementById("my_stats")
-    if (account_loggedin) {
-        my_stats_elem.innerHTML = 'You left the box at position [200, 300]'
+    
+    async function main() {
+        // common authentication API
+        const instance = new gameApi("box-mover");
+        const userinfo = await instance.getUserInfo();
+        const loggedin = userinfo && userinfo.hasOwnProperty('username');
+        const login_section = document.getElementById("login_section")
+        login_section.innerHTML = loggedin ? `Welcome ${userinfo.username}` : 'Not logged in'
+        login_section.innerHTML += loginbutton(loggedin)
+
+        // game specific API
+        const gamestate = await instance.getGamestate();
+        const my_stats_elem = document.getElementById("my_stats")
+        if (gamestate) {
+            my_stats_elem.innerHTML = `Your last box position is [${gamestate.x || 0}, ${gamestate.y || 0}]`;
+        } else {
+            my_stats_elem.innerHTML = 'No user data to display';
+        }
+
+        const leaderboard = await getboxmoverLeaderboard();
+        const global_stats_elem = document.getElementById("global_stats");
+        if (!leaderboard || leaderboard.length === 0) {
+            global_stats_elem.innerHTML = 'No game stats to display';
+            return;
+        }
+
+        let parsedLeaderboard = leaderboard.map(entry => {
+            let data = {};
+            try {
+                data = JSON.parse(entry.data);
+            } catch (e) {
+                data = {};
+            }
+            return {
+                username: entry.username,
+                box_x: data.x || 0,
+                box_y: data.y || 0
+            };
+        });
+        parsedLeaderboard.sort((b, a) => a.box_x - b.box_x);
+
+        let tableHtml = `<b>Box mover global game stats</b>
+            <table>
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Username</td>
+                        <td>Box X</td>
+                        <td>Box Y</td>
+                    </tr>
+                </thead>
+                <tbody>`;
+        parsedLeaderboard.forEach((entry, idx) => {
+            tableHtml += `<tr>
+                <td>${idx + 1}</td>
+                <td>${entry.username}</td>
+                <td>${entry.box_x}</td>
+                <td>${entry.box_y}</td>
+            </tr>`;
+        });
+        tableHtml += `</tbody></table>`;
+        global_stats_elem.innerHTML = tableHtml;
     }
-    else {
-        my_stats_elem.innerHTML = 'No user data to display'
-    }
+    main()
 </script>
 
 

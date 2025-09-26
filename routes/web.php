@@ -40,3 +40,6 @@ Route::get("/api/userinfo", [ApiController::class, 'getUserInfo']);
 Route::post('/api/register', [RegisterController::class, 'register']);
 Route::post('/api/login', [LoginController::class, 'login']);
 Route::post('/api/account', [UserController::class, 'accountsettings']);
+
+// ADDED
+Route::get("/api/allgamestates/{game}", [ApiController::class, 'getAllGamestatesByGame']);

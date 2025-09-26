@@ -1,5 +1,4 @@
 const form_login_handler = async (formElem) => {
-    console.log("formElem", formElem)
     const username_txt = formElem.getChildByID('login_username');
     const login_password = formElem.getChildByID('login_password');
     try {
@@ -16,7 +15,6 @@ const form_login_handler = async (formElem) => {
             throw new Error(res.message);
         }
 
-
         // Only remove login form if login succeeds
         formElem.removeListener('click');
         formElem.setVisible(false);
@@ -29,8 +27,8 @@ const form_login_handler = async (formElem) => {
         document.getElementById('login_err').innerText = err.message;
         console.error("Login error:", err);
     }
-
 }
+
 const form_join_handler = async (formElem) => {
     const join_username = formElem.getChildByID('join_username');
     const join_email = formElem.getChildByID('join_email');
@@ -50,6 +48,7 @@ const form_join_handler = async (formElem) => {
         if (!res.id) {
             throw new Error(res.username || res.email || res.password || res.message);
         }
+
         // Registration success, now login  
         const loginres = await loginUser(join_username.value, join_password.value);
         if (!loginres) {
@@ -66,14 +65,13 @@ const form_join_handler = async (formElem) => {
         document.getElementById('join_err').innerText = err.message;
         console.error("Register error:", err);
     }
-
 }
+
 const form_skip_handler = async (formElem) => {
     formElem.removeListener('click');
     formElem.setVisible(false);
-    user_name = '[guest]';
-    user_id = 0;
-    return true;
+    const guest_user = { username: '[guest]', id: 0 };
+    return guest_user
 }
 
 const autoLogin = async () => {
@@ -93,6 +91,7 @@ const createAccount = async (username_txt, email_txt, login_password) => {
     const userinfo = (await instance.register({ username: username_txt, email: email_txt, password: login_password }));
     return userinfo;
 }
+
 const logoutUser = async () => {
     const instance = new gameApi("button-clicker");
     const reponse = (await instance.logout());

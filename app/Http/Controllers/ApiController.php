@@ -197,4 +197,9 @@ class ApiController extends Controller {
     
         return response()->json($game, 200);
     }
+
+    public function getAllGamestatesByGame(Request $request, $game) {
+        return Gamestate::where('game', $game)->get()->toArray();
+    }
+
 }
