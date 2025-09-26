@@ -40,3 +40,7 @@ body {
 #global_stats table tbody tr:nth-child(odd) {
     background-color: var(--secondary-light);
 }
+
+#global_stats table tr td{
+    padding: 0.2em 1em;
+}

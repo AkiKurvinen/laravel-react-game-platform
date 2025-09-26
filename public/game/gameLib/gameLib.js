@@ -36,6 +36,7 @@ class gameApi {
     async getGamestate() {
         const resp = await fetch(`/api/gamestate/${this.gameName}`);
         if (!resp.ok) {
+            console.error("Failed to fetch gamestate", resp.statusText);
             return null;
         }
         let respJson;

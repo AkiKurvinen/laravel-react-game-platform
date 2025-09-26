@@ -44,12 +44,11 @@
         <a href="/game/button-clicker/game/" id="play_link">Play now</a>
         <br>
         <br><br>
-        <a href="/" id="play_link">Back</a>
-
+        <a href="/">Back</a>
     </main>
 </body>
 <script>
-    // simulate common authentication API
+    // common authentication API
     async function main() {
         const instance = new gameApi("button-clicker");
         const userinfo = await instance.getUserInfo();
@@ -58,9 +57,10 @@
         login_section.innerHTML = loggedin ? `Welcome ${userinfo.username}` : 'Not logged in'
         login_section.innerHTML += loginbutton(loggedin)
 
-        // simulate game specific API
+        // game specific API
         const gamestate = await instance.getGamestate();
         const my_stats_elem = document.getElementById("my_stats")
+        
         if (gamestate) {
             my_stats_elem.innerHTML += `Your highest click count is ${gamestate && gamestate.score || 0}`
         }
@@ -68,7 +68,6 @@
             my_stats_elem.innerHTML = 'No user data to display'
         }
 
-        // simulate game specific API
         const leaderboard = await instance.getLeaderBoard();
         const global_stats_elem = document.getElementById("global_stats")
         if (!leaderboard || leaderboard.length === 0) {
@@ -97,8 +96,6 @@
         global_stats_elem.innerHTML = tableHtml;
     }
     main()
-
-
 </script>
 
 </html>
